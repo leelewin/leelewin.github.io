@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>CMake构建工具 - index of blog</title>
+  <link rel="stylesheet" href="/_markdown_plugin_assets/highlight.js/atom-one-light.css" /></head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">index of blog</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">CMake构建工具</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1649638181935"
+                  >2022-04-11 08:49</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1650859461735"
+                  >2022-04-25 12:04</time
+                ></span
+              >
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><nav class="table-of-contents"><ul><li><a href="#样例">样例</a></li><li><a href="#构建build">构建（Build）</a></li><li><a href="#cmake一般使用流程">CMake一般使用流程</a></li><li><a href="#核心语法">核心语法</a></li><li><a href="#基础配置">基础配置</a></li><li><a href="#引入第三方库三种方法">引入第三方库（三种方法）</a><ul><li><a href="#纯头文件">纯头文件</a></li><li><a href="#作为子模块引入">作为子模块引入</a></li><li><a href="#引用系统中预安装的第三方库">引用系统中预安装的第三方库</a></li></ul></li><li><a href="#编译目标文件">编译目标文件</a><ul><li><a href="#静态库-动态库">静态库  动态库</a></li><li><a href="#可执行文件">可执行文件</a></li></ul></li><li><a href="#安装和打包">安装和打包</a></li><li><a href="#测试">测试</a></li></ul></nav><h2 id="样例">样例</h2>
+<p><a title="https://hsf-training.github.io/hsf-training-cmake-webpage/06-projectstructure/index.html" href="https://hsf-training.github.io/hsf-training-cmake-webpage/06-projectstructure/index.html">good</a>
+<a title="https://github.com/hsf-training/hsf-training-cmake-webpage/tree/gh-pages/_includes/code/03-structure" href="https://github.com/hsf-training/hsf-training-cmake-webpage/tree/gh-pages/_includes/code/03-structure">不错的例子</a></p>
+<h2 id="构建build">构建（Build）</h2>
+<p>当需要编译的东西很多时，需要说明先编译什么，后编译什么</p>
+<h2 id="cmake一般使用流程">CMake一般使用流程</h2>
+<p>CMake提供cmake、ctest、cpack三个命令行工具分别负责构建、测试、打包。</p>
+<ol>
+<li>编写CMakeLists.txt
+编译：确定编译目标需要的源文件
+链接：确定链接时需要依赖的额外的库</li>
+<li>生成构建系统
+<code>cmake -B build</code>，会在项目的根目录创建build目录并在其中生成Makefile文件</li>
+<li>执行构建
+<code>cmake --build build</code>
+or
+<code>cd build &amp;&amp; make &amp;&amp; cd -</code>
+执行完成后可以在build目录看到以及生成的可执行文件</li>
+</ol>
+<h2 id="核心语法">核心语法</h2>
+<h2 id="基础配置">基础配置</h2>
+<div><pre class="hljs"><code><span class="hljs-function"><span class="hljs-title">target_include_directories</span><span class="hljs-params">(myapp PUBLIC /path)</span></span> #添加头文件搜索目录
+<span class="hljs-function"><span class="hljs-title">target_link_libraries</span><span class="hljs-params">(myapp PUBLIC hellolib)</span></span> #添加要链接的库
+<span class="hljs-function"><span class="hljs-title">target_add_definitions</span><span class="hljs-params">(myapp PUBLIC MY_MACRO=<span class="hljs-number">1</span>)</span></span> #添加一个宏定义
+<span class="hljs-function"><span class="hljs-title">target_compile_options</span><span class="hljs-params">(myapp PUBLIC -fopenmp)</span></span> #添加编译器命令行选项
+<span class="hljs-function"><span class="hljs-title">target_sources</span><span class="hljs-params">(myapp PUBLIC hello.cc other.cc)</span></span> #添加要编译的源文件
+也可以通过以下指令（不推荐使用），把选项加到所有接下来的目标去
+<span class="hljs-function"><span class="hljs-title">include_directories</span><span class="hljs-params">(/path)</span></span> #添加头文件搜索目录
+<span class="hljs-function"><span class="hljs-title">link_directories</span><span class="hljs-params">(/path/)</span></span> #添加库文件的搜索路径
+<span class="hljs-function"><span class="hljs-title">add_definitions</span><span class="hljs-params">(MY_MACRO=<span class="hljs-number">1</span>)</span></span> #添加一个宏定义
+<span class="hljs-function"><span class="hljs-title">add_compile</span><span class="hljs-params">(-fopenmp)</span></span>    #添加编译器命令行选项</code></pre></div>
+<h2 id="引入第三方库三种方法">引入第三方库（三种方法）</h2>
+<h3 id="纯头文件">纯头文件</h3>
+<p>用法：只需把他的include目录或头文件下载下来，然后<code>include_directories(xxlib/include)</code></p>
+<h3 id="作为子模块引入">作为子模块引入</h3>
+<p>把项目的源码放到你工程的根目录，通过add_subdirectory()引入</p>
+<h3 id="引用系统中预安装的第三方库">引用系统中预安装的第三方库</h3>
+<p>可以通过find_package命令来寻找系统中的包、库</p>
+<div><pre class="hljs"><code>find_package(<span class="hljs-keyword">fmt</span> REQUIRED)
+target_link_libraries(myexec <span class="hljs-keyword">PUBLIC</span> <span class="hljs-keyword">fmt</span>::<span class="hljs-keyword">fmt</span>)
+为什么是<span class="hljs-keyword">fmt</span>::<span class="hljs-keyword">fmt</span>而不是<span class="hljs-keyword">fmt</span>?
+现代cmake认为package可以提供多个components，每个包都享有一个独立的名字空间，用::进行分割。</code></pre></div>
+<h2 id="编译目标文件">编译目标文件</h2>
+<h3 id="静态库-动态库">静态库  动态库</h3>
+<h3 id="可执行文件">可执行文件</h3>
+<h2 id="安装和打包">安装和打包</h2>
+<h2 id="测试">测试</h2>
+</div>
+      </article>
+    </div>
+  </body>
+</html>
