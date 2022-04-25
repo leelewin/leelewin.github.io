@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>12章 动态内存 - Home</title>
+  <link rel="stylesheet" href="/_markdown_plugin_assets/katex/katex.css" /></head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">Home</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">12章 动态内存</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1646358139963"
+                  >2022-03-04 09:42</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1647657524220"
+                  >2022-03-19 10:38</time
+                ></span
+              >
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><nav class="table-of-contents"><ul><li><a href="#new的行为">new的行为</a></li><li><a href="#delete的行为">delete的行为</a></li><li><a href="#重载全局new-deletenew-delete">重载全局new delete/new[] delete[]</a></li><li><a href="#重载成员new-deletenew-delete">重载成员new delete/new[] delete[]</a></li><li><a href="#重载newdelete-placement-new">重载new()/delete()    placement new</a></li><li><a href="#allocator类">allocator类</a></li></ul></nav><hr />
+<h2 id="new的行为">new的行为</h2>
+<p><img src="/_resources/b103a40affae4670b1649367d9cd39a6.jpg" /></p>
+<h2 id="delete的行为">delete的行为</h2>
+<p><img src="/_resources/1e30b71e220b4cc087f8c58bd08972f9.jpg" /></p>
+<h2 id="重载全局new-deletenew-delete">重载全局new delete/new[] delete[]</h2>
+<p>全局的影响很远
+new[]下面所占的大小要额外加上一个计数器。</p>
+<h2 id="重载成员new-deletenew-delete">重载成员new delete/new[] delete[]</h2>
+<p>可以构建内存池？？
+<a title="https://www.cnblogs.com/bincodes/p/15191716.html" href="https://www.cnblogs.com/bincodes/p/15191716.html">c++实现高效内存池</a></p>
+<h2 id="重载newdelete-placement-new">重载new()/delete()    placement new</h2>
+<p>new (yyy) xxx;
+根据placement argument(也就是yyy)可以有多个版本。其中yyy是一个指针的比较重要。</p>
+<p>只要当new所调用的ctor抛出exception，才会调用这些重载版本的delete().它只可能这样被调用，主要用来清除未能完全创建成功的object所站用的memory。</p>
+<p>一种形式：</p>
+<p><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="blue"><mrow><mi>p</mi><mi>l</mi><mi>a</mi><mi>c</mi><mi>e</mi><mi>m</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>n</mi><mi>e</mi><mi>w</mi><mtext>允许你在一个已经分配好的内存中（栈或堆中）构造一个新</mtext></mrow></mstyle></mrow><annotation encoding="application/x-tex">\color{blue}{placement new允许你在一个已经分配好的内存中（栈或堆中）构造一个新}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em"></span><span class="mord" style="color:blue"><span class="mord mathnormal" style="margin-right:0.01968em;color:blue">pl</span><span class="mord mathnormal" style="color:blue">a</span><span class="mord mathnormal" style="color:blue">ce</span><span class="mord mathnormal" style="color:blue">m</span><span class="mord mathnormal" style="color:blue">e</span><span class="mord mathnormal" style="color:blue">n</span><span class="mord mathnormal" style="color:blue">t</span><span class="mord mathnormal" style="color:blue">n</span><span class="mord mathnormal" style="color:blue">e</span><span class="mord mathnormal" style="margin-right:0.02691em;color:blue">w</span><span class="mord cjk_fallback" style="color:blue">允许你在一个已经分配好的内存中（栈或堆中）构造一个新</span></span></span></span></span></span> 的对象。原型中<code>void*p</code>实际上就是指向一个已经分配好的内存缓冲区的的首地址。</p>
+<p>我们知道使用new操作符分配内存需要在堆中查找足够大的剩余空间，这个操作速度是很慢的，而且有可能出现无法分配内存的异常（空间不够）。placement new就可以解决这个问题。我们构造对象都是在一个预先准备好了的内存缓冲区中进行，不需要查找内存，内存分配的时间是常数；而且不会出现在程序运行中途出现内存不足的异常。所以，placement new非常适合那些对时间要求比较高，长时间运行不希望被打断的应用程序。</p>
+<p><a title="https://blog.csdn.net/zhangxinrun/article/details/5940019" href="https://blog.csdn.net/zhangxinrun/article/details/5940019">一篇讲的挺棒的博文</a></p>
+<p>下面这是另一种形式：
+<img src="/_resources/4ad7d7e9002b44f99521b4c588d220ed.jpg" /></p>
+<h2 id="allocator类">allocator类</h2>
+<p>将内存分配和对象构造分开。提供了一种类型感知的内存分配方法，它分配的内存是原始的、未构造的。</p>
+<p>new不灵活呗，不灵活体现在内存分配和对象构造是一起的。<span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="red"><mtext>有啥不好的吗</mtext></mstyle></mrow><annotation encoding="application/x-tex">\color{red}{有啥不好的吗}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em"></span><span class="mord" style="color:red"><span class="mord cjk_fallback" style="color:red">有啥不好的吗</span></span></span></span></span></span></p>
+</div>
+      </article>
+    </div>
+  </body>
+</html>
