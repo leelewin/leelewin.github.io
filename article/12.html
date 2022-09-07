@@ -6,8 +6,9 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 <link rel="stylesheet" href="/_assets/main.css" />
 
-    <title>12章 动态内存 - Home</title>
-  <link rel="stylesheet" href="/_markdown_plugin_assets/katex/katex.css" /></head>
+    <title>动态内存 - Home</title>
+  <link rel="stylesheet" href="/_markdown_plugin_assets/katex/katex.css" />
+<link rel="stylesheet" href="/_markdown_plugin_assets/highlight.js/atom-one-light.css" /></head>
   <body>
     <div class="main">
       <nav class="navigation">
@@ -15,7 +16,7 @@
       </nav>
       <article>
         <header>
-          <h1 class="article-title">12章 动态内存</h1>
+          <h1 class="article-title">动态内存</h1>
           <div class="article-info">
             <div>
               <span
@@ -24,38 +25,125 @@
                 ></span
               >
               <span
-                >Updated At：<time datetime="1647657524220"
-                  >2022-03-19 10:38</time
+                >Updated At：<time datetime="1659874216320"
+                  >2022-08-07 20:10</time
                 ></span
               >
             </div>
             
+            <div>
+              Keywords: 
+              <span class="keyword">c++</span>
+              
+            </div>
+            
           </div>
         </header>
-        <div class="article-content markdown-body"><nav class="table-of-contents"><ul><li><a href="#new的行为">new的行为</a></li><li><a href="#delete的行为">delete的行为</a></li><li><a href="#重载全局new-deletenew-delete">重载全局new delete/new[] delete[]</a></li><li><a href="#重载成员new-deletenew-delete">重载成员new delete/new[] delete[]</a></li><li><a href="#重载newdelete-placement-new">重载new()/delete()    placement new</a></li><li><a href="#allocator类">allocator类</a></li></ul></nav><hr />
+        <div class="article-content markdown-body"><nav class="table-of-contents"><ul><li><a href="#new的行为">new的行为</a></li><li><a href="#delete的行为">delete的行为</a></li><li><a href="#重载全局new-deletenew-delete">重载全局new delete/new[] delete[]</a></li><li><a href="#重载成员new-deletenew-delete">重载成员new delete/new[] delete[]</a></li><li><a href="#重载newdelete-placement-new">重载new()/delete()    placement new</a></li><li><a href="#allocator类">allocator类</a></li><li><a href="#智能指针">智能指针</a><ul><li><a href="#三种智能指针的api">三种智能指针的API</a></li><li><a href="#使用智能指针中的注意事项">使用智能指针中的注意事项</a><ul><li><a href="#shared_ptr">shared_ptr</a></li></ul></li><li><a href="#源码分析">源码分析</a><ul><li><a href="#shared_ptr和weak_ptr">shared_ptr和weak_ptr</a></li></ul></li></ul></li></ul></nav><hr />
 <h2 id="new的行为">new的行为</h2>
+<p>void* operator new(size_t sz) throw(); 源码位置：libsupc++/new_op.cc/</p>
 <p><img src="/_resources/b103a40affae4670b1649367d9cd39a6.jpg" /></p>
 <h2 id="delete的行为">delete的行为</h2>
 <p><img src="/_resources/1e30b71e220b4cc087f8c58bd08972f9.jpg" /></p>
 <h2 id="重载全局new-deletenew-delete">重载全局new delete/new[] delete[]</h2>
-<p>全局的影响很远
+<p>全局的影响很远<br />
 new[]下面所占的大小要额外加上一个计数器。</p>
+<p>new  -&gt;  void* operator new(xxx)<br />
+new[]  -&gt; void* operator new[](xxxx)</p>
 <h2 id="重载成员new-deletenew-delete">重载成员new delete/new[] delete[]</h2>
-<p>可以构建内存池？？
+<p>可以构建内存池？？<br />
 <a title="https://www.cnblogs.com/bincodes/p/15191716.html" href="https://www.cnblogs.com/bincodes/p/15191716.html">c++实现高效内存池</a></p>
 <h2 id="重载newdelete-placement-new">重载new()/delete()    placement new</h2>
-<p>new (yyy) xxx;
+<p>new (yyy) xxx;  -&gt; void* operator new(xxx, xxx, xxx);重载的函数<br />
 根据placement argument(也就是yyy)可以有多个版本。其中yyy是一个指针的比较重要。</p>
 <p>只要当new所调用的ctor抛出exception，才会调用这些重载版本的delete().它只可能这样被调用，主要用来清除未能完全创建成功的object所站用的memory。</p>
 <p>一种形式：</p>
 <p><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="blue"><mrow><mi>p</mi><mi>l</mi><mi>a</mi><mi>c</mi><mi>e</mi><mi>m</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>n</mi><mi>e</mi><mi>w</mi><mtext>允许你在一个已经分配好的内存中（栈或堆中）构造一个新</mtext></mrow></mstyle></mrow><annotation encoding="application/x-tex">\color{blue}{placement new允许你在一个已经分配好的内存中（栈或堆中）构造一个新}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em"></span><span class="mord" style="color:blue"><span class="mord mathnormal" style="margin-right:0.01968em;color:blue">pl</span><span class="mord mathnormal" style="color:blue">a</span><span class="mord mathnormal" style="color:blue">ce</span><span class="mord mathnormal" style="color:blue">m</span><span class="mord mathnormal" style="color:blue">e</span><span class="mord mathnormal" style="color:blue">n</span><span class="mord mathnormal" style="color:blue">t</span><span class="mord mathnormal" style="color:blue">n</span><span class="mord mathnormal" style="color:blue">e</span><span class="mord mathnormal" style="margin-right:0.02691em;color:blue">w</span><span class="mord cjk_fallback" style="color:blue">允许你在一个已经分配好的内存中（栈或堆中）构造一个新</span></span></span></span></span></span> 的对象。原型中<code>void*p</code>实际上就是指向一个已经分配好的内存缓冲区的的首地址。</p>
 <p>我们知道使用new操作符分配内存需要在堆中查找足够大的剩余空间，这个操作速度是很慢的，而且有可能出现无法分配内存的异常（空间不够）。placement new就可以解决这个问题。我们构造对象都是在一个预先准备好了的内存缓冲区中进行，不需要查找内存，内存分配的时间是常数；而且不会出现在程序运行中途出现内存不足的异常。所以，placement new非常适合那些对时间要求比较高，长时间运行不希望被打断的应用程序。</p>
 <p><a title="https://blog.csdn.net/zhangxinrun/article/details/5940019" href="https://blog.csdn.net/zhangxinrun/article/details/5940019">一篇讲的挺棒的博文</a></p>
-<p>下面这是另一种形式：
+<p>下面这是另一种形式：<br />
 <img src="/_resources/4ad7d7e9002b44f99521b4c588d220ed.jpg" /></p>
 <h2 id="allocator类">allocator类</h2>
 <p>将内存分配和对象构造分开。提供了一种类型感知的内存分配方法，它分配的内存是原始的、未构造的。</p>
 <p>new不灵活呗，不灵活体现在内存分配和对象构造是一起的。<span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="red"><mtext>有啥不好的吗</mtext></mstyle></mrow><annotation encoding="application/x-tex">\color{red}{有啥不好的吗}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em"></span><span class="mord" style="color:red"><span class="mord cjk_fallback" style="color:red">有啥不好的吗</span></span></span></span></span></span></p>
+<h2 id="智能指针">智能指针</h2>
+<p>不错的文章建议常看：<br />
+<a title="https://mp.weixin.qq.com/s?__biz=Mzk0MzI4OTI1Ng==&amp;mid=2247487474&amp;idx=1&amp;sn=e29d0178bfd4139313c44139e1cb3899&amp;chksm=c3376935f440e023b96e9f8feeb34e4e22fbb74f00ca345a2b867edfd4c088bc595821fe878e&amp;mpshare=1&amp;scene=1&amp;srcid=0807tF2QWlwNfVHX6aM40n4z&amp;sharer_sharetime=1659846217745&amp;sharer_shareid=2001a9634d43cd5890cc2ac56adc3a0d&amp;key=1cefe5990c752a4aa069de6869581d3911e869fd47a156a0bffcf90603c9f1205072d4669ffae5b9b996c0cc8ba821634ab101792d8745ee370ead305294545ef8b8a8d0c05e03ea58a13c93c22627527b237be787e59f9fdc1095fe87f61c67626c7223856c7c677a814b1267e467e9d0730899a7a8083f25fc9dabcfe4d544&amp;ascene=1&amp;uin=MTEwNTY5MzMzMQ%3D%3D&amp;devicetype=Windows+7+x64&amp;version=63000039&amp;lang=zh_CN&amp;exportkey=A8%2F9OW8a84lw23NXlpy%2BfT4%3D&amp;acctmode=0&amp;pass_ticket=7pQstCJDAu3q5xrJZ%2BEbr2gAkrJavRulyvb7a4D35aFXFqkTsbkvuAigqCBm101k&amp;wx_header=0" href="https://mp.weixin.qq.com/s?__biz=Mzk0MzI4OTI1Ng==&amp;mid=2247487474&amp;idx=1&amp;sn=e29d0178bfd4139313c44139e1cb3899&amp;chksm=c3376935f440e023b96e9f8feeb34e4e22fbb74f00ca345a2b867edfd4c088bc595821fe878e&amp;mpshare=1&amp;scene=1&amp;srcid=0807tF2QWlwNfVHX6aM40n4z&amp;sharer_sharetime=1659846217745&amp;sharer_shareid=2001a9634d43cd5890cc2ac56adc3a0d&amp;key=1cefe5990c752a4aa069de6869581d3911e869fd47a156a0bffcf90603c9f1205072d4669ffae5b9b996c0cc8ba821634ab101792d8745ee370ead305294545ef8b8a8d0c05e03ea58a13c93c22627527b237be787e59f9fdc1095fe87f61c67626c7223856c7c677a814b1267e467e9d0730899a7a8083f25fc9dabcfe4d544&amp;ascene=1&amp;uin=MTEwNTY5MzMzMQ%3D%3D&amp;devicetype=Windows+7+x64&amp;version=63000039&amp;lang=zh_CN&amp;exportkey=A8%2F9OW8a84lw23NXlpy%2BfT4%3D&amp;acctmode=0&amp;pass_ticket=7pQstCJDAu3q5xrJZ%2BEbr2gAkrJavRulyvb7a4D35aFXFqkTsbkvuAigqCBm101k&amp;wx_header=0">智能指针-使用 避坑和实现</a><br />
+<a title="https://mp.weixin.qq.com/s?__biz=MjM5ODYwMjI2MA==&amp;mid=2649766384&amp;idx=1&amp;sn=78fad81d81ec10f7f99057820ded941b&amp;chksm=beccaa8b89bb239d46f37a4f89163369c70cde3a7dc35287afde992c8cd6ede34c58f85bb9e5&amp;mpshare=1&amp;scene=1&amp;srcid=0807WFDpDEaZvOGf7mPmaUpx&amp;sharer_sharetime=1659856626556&amp;sharer_shareid=2001a9634d43cd5890cc2ac56adc3a0d&amp;key=e6d301f5c506e6b0c32d5ccd866caf977b71c6ba820c657468d6a792701a01fbc3a9c9545144e1111c2e3810bab477aa500202681eb6bf7758890225b5a611d54db08080a1b820ba4cb1ec669b80be059457155ae7790b7396d415a32cf3e6c30fe6734c97058cf66c53979a900963d003a72430176ea83a6f6f4ca4f9c6354f&amp;ascene=1&amp;uin=MTEwNTY5MzMzMQ%3D%3D&amp;devicetype=Windows+7+x64&amp;version=63000039&amp;lang=zh_CN&amp;exportkey=A92jU%2BW9yVcZaqCoex8flTc%3D&amp;acctmode=0&amp;pass_ticket=7pQstCJDAu3q5xrJZ%2BEbr2gAkrJavRulyvb7a4D35aFXFqkTsbkvuAigqCBm101k&amp;wx_header=0" href="https://mp.weixin.qq.com/s?__biz=MjM5ODYwMjI2MA==&amp;mid=2649766384&amp;idx=1&amp;sn=78fad81d81ec10f7f99057820ded941b&amp;chksm=beccaa8b89bb239d46f37a4f89163369c70cde3a7dc35287afde992c8cd6ede34c58f85bb9e5&amp;mpshare=1&amp;scene=1&amp;srcid=0807WFDpDEaZvOGf7mPmaUpx&amp;sharer_sharetime=1659856626556&amp;sharer_shareid=2001a9634d43cd5890cc2ac56adc3a0d&amp;key=e6d301f5c506e6b0c32d5ccd866caf977b71c6ba820c657468d6a792701a01fbc3a9c9545144e1111c2e3810bab477aa500202681eb6bf7758890225b5a611d54db08080a1b820ba4cb1ec669b80be059457155ae7790b7396d415a32cf3e6c30fe6734c97058cf66c53979a900963d003a72430176ea83a6f6f4ca4f9c6354f&amp;ascene=1&amp;uin=MTEwNTY5MzMzMQ%3D%3D&amp;devicetype=Windows+7+x64&amp;version=63000039&amp;lang=zh_CN&amp;exportkey=A92jU%2BW9yVcZaqCoex8flTc%3D&amp;acctmode=0&amp;pass_ticket=7pQstCJDAu3q5xrJZ%2BEbr2gAkrJavRulyvb7a4D35aFXFqkTsbkvuAigqCBm101k&amp;wx_header=0">c++智能指针最佳实践和源码分析</a></p>
+<p>虽然对智能指针的概念比较熟悉了，但对具体的使用场景却不清楚。<br />
+主要是对所有权和生命周期的思考。<br />
+上面的一篇文章总结的不错：<br />
+<strong>unique_ptr使用场景：</strong><br />
+简单的理解为：只在对象内部或方法内部使用的时候。<br />
+<strong>shared_ptr使用场景：</strong><br />
+一般需要多个执行同一个对象的指针使用。<br />
+简单理解为：这个对象需要被多个class同时使用的时候。<br />
+<strong>weak_ptr使用场景</strong><br />
+解决shared_ptr循环引用问题。</p>
+<p>从面向对象的角度看：<br />
+<strong>组合关系</strong>- 在多线程中没问题，对象x的生命期由其唯一的拥有者控制。<br />
+比如，x是owner的直接数据成员，或者unique_ptr成员，或者owner持有的容器的元素。<br />
+<strong>关联关系</strong>-<br />
+<strong>聚合关系</strong></p>
+<p>有几个问题：<br />
+1.智能指针作为参数<br />
+智能指针作为参数，作为返回值，传递智能指针引用。</p>
+<ul>
+<li>unique_ptr传递const by refence可以阻止在函数中释放unique_ptr，也就是说只能使用(读、写) 但不会误释放。</li>
+<li>unique_ptr传值，没有拷贝赋值，需要move</li>
+<li>shared_ptr传引用</li>
+</ul>
+<div><pre class="hljs"><code><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">f1</span><span class="hljs-params">(<span class="hljs-keyword">const</span> std::unique_ptr&lt;std::string&gt; &amp;p)</span>
+</span>{
+    std::cout &lt;&lt; <span class="hljs-string">"address: "</span> &lt;&lt; &amp;p &lt;&lt; <span class="hljs-string">" value: "</span> &lt;&lt; *p &lt;&lt; <span class="hljs-string">"count: "</span> 
+                                        &lt;&lt; std::endl;
+    p = <span class="hljs-literal">nullptr</span>; <span class="hljs-comment">//error</span>
+}</code></pre></div>
+<p>2.第三方库函数是裸指针但我使用的是智能指针？？。</p>
+<h3 id="三种智能指针的api">三种智能指针的API</h3>
+<p><code>#include &lt;memory&gt;</code></p>
+<ul>
+<li>
+<p>shared_ptr API<br />
+1.解引用（*, -&gt;）<br />
+2.<code>make_shared&lt;T&gt;(arg)</code><br />
+3.<code>sp.get()</code>返回裸指针，最好不要用，就算要用也要确保不能delete<br />
+4.<code>sp.use_count()</code>返回与p共享对象的智能指针个数，很慢<br />
+5.<code>sp.unique()</code>是1返回true</p>
+</li>
+<li>
+<p>unique_ptr API<br />
+1.没有拷贝构造和拷贝赋值运算符，有一个例外那就是可以拷贝或赋值一个将要被销毁的unique_ptr(比如：从函数返回一个unique_ptr)<br />
+2.析构器的型别是智能指针型别的一部分（shared_ptr不是，二者差异很大）<br />
+3.<code>up.release()</code>up放弃对指针的所有权，返回指针，并将up置空。可以实现转移所有权到另一个unique_ptr<br />
+4.<code>up.reset(p)</code>p==空 or p != 空<br />
+5.解引用（*, -&gt;）<br />
+6.unique_ptr是容易转换成shared_ptr的，注意shared_ptr接受一个右值。</p>
+</li>
+<li>
+<p>weak_ptr API<br />
+一种不控制所指对象生命期的智能指针<br />
+1.要用一个shared_ptr来初始化<br />
+2.<code>wp.use_count()</code>与wp共享对象的shared_ptr的数量<br />
+3.<code>wp.reset()</code>将wp置空<br />
+4.由于对象可能不存在，不能直接通过weak_ptr直接访问对象，必须调用lock()。<code>wp.lock()</code>：如果wp.use_cout() == 0返回空shared_ptr，否则返回一个指向wp的对象的shared_ptr<br />
+5.无法解引用</p>
+</li>
+</ul>
+<h3 id="使用智能指针中的注意事项">使用智能指针中的注意事项</h3>
+<p>很重要，非常重要<br />
+见effective c++部分</p>
+<h4 id="shared_ptr">shared_ptr</h4>
+<ul>
+<li>shared_ptr的尺寸是裸指针的两倍</li>
+<li>引用计数的内存必须动态分配</li>
+<li>引用计数的递增和递减是原子操作</li>
+</ul>
+<h3 id="源码分析">源码分析</h3>
+<p>位置：shared_ptr以及weak_ptr -&gt; include/tr1/shared_ptr.h<br />
+位置：unique_ptr        -&gt;  include/bits/unique_ptr.h</p>
+<h4 id="shared_ptr和weak_ptr">shared_ptr和weak_ptr</h4>
+<p><img src="/_resources/0b25622e476b4087b1aa43318409981c.jpg" /></p>
 </div>
       </article>
     </div>
