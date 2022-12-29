@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>图形学 - Home</title>
+  </head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">Home</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">图形学</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1638951348493"
+                  >2021-12-08 16:15</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1647322536797"
+                  >2022-03-15 13:35</time
+                ></span
+              >
+            </div>
+            
+            <div>
+              Keywords: 
+              <span class="keyword">cg</span>
+              
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><nav class="table-of-contents"><ul><li><a href="#2d变换">2D变换</a><ul><li><a href="#scale-matrix">scale matrix</a></li><li><a href="#reflection-matrix">reflection matrix</a></li><li><a href="#shear-matrix">shear matrix</a></li><li><a href="#rotateabout-the-origin00">rotate(about the origin(0,0))</a></li><li><a href="#homogenous-coordimates齐次坐标系">homogenous coordimates(齐次坐标系)</a></li><li><a href="#2d-tansformation-in-homogenous">2D tansformation in homogenous</a></li><li><a href="#composing-transforms">composing transforms</a></li></ul></li><li><a href="#坐标系统">坐标系统</a></li><li><a href="#3d变换">3D变换</a><ul><li><a href="#homogenous-coordimates">homogenous coordimates</a></li><li><a href="#3d-transformations">3D transformations</a></li><li><a href="#mvp-transformation-and-viewport">MVP transformation and viewport</a><ul><li><a href="#model-transformation">model transformation</a></li><li><a href="#view-transformation">view transformation</a></li><li><a href="#projection-transformation">projection transformation</a></li><li><a href="#viewport-transformation">viewport transformation</a></li></ul></li></ul></li><li><a href="#rasterization">rasterization</a><ul><li><a href="#shading">shading</a></li><li><a href="#shading-model-blinn-phong-reflectance-model">shading model: blinn-phong reflectance model</a></li><li><a href="#shading-frequencies">shading frequencies</a></li><li><a href="#graphics-pipeline">graphics pipeline</a></li><li><a href="#texture-mapping">texture mapping</a></li><li><a href="#interpolation-across-triangles-barycentric-coordinates">interpolation across triangles: barycentric coordinates</a></li><li><a href="#bump-vs-normal-vs-displacement-mapping">bump vs normal vs displacement mapping</a></li></ul></li><li><a href="#geometry">geometry</a><ul><li><a href="#implicit-representaions-of-geometry">implicit representaions of geometry</a></li><li><a href="#explicit-representaions-of-geometry">explicit representaions of geometry</a></li><li><a href="#curves">curves</a><ul><li><a href="#bezier-curves贝塞尔曲线">bezier curves贝塞尔曲线</a></li><li><a href="#splines-样条">splines 样条</a></li></ul></li><li><a href="#surfaces">surfaces</a><ul><li><a href="#bezier-surfaces">bezier surfaces</a></li><li><a href="#mesh-operations">mesh operations</a></li></ul></li></ul></li><li><a href="#ray-tracing">ray tracing</a><ul><li><a href="#whitted-style-ray-tracing">whitted-style ray-tracing</a><ul><li><a href="#ray-surface-intersection">ray-surface intersection</a></li><li><a href="#accelerating-ray-surfacetriangle-intersection">accelerating ray-surface(triangle) intersection</a></li><li><a href="#uniform-spatial-partitionsgrids">uniform spatial partitions(grids)</a></li><li><a href="#spatial-partitioning">spatial partitioning</a></li><li><a href="#object-partitions-bounding-volume-hierarchybvh">object partitions &amp; bounding volume hierarchy(BVH)*</a></li></ul></li><li><a href="#basic-radiometry辐射度量学">basic radiometry(辐射度量学)</a><ul><li><a href="#radiant-energy-and-fluxpower">radiant energy and flux(power)</a></li><li><a href="#irradiance-and-radiance">irradiance and radiance</a></li><li><a href="#brdf">BRDF</a></li><li><a href="#reflection-equation">reflection equation</a></li><li><a href="#rendering-equation">rendering equation</a></li><li><a href="#monte-carlo-path-tracing">Monte Carlo Path Tracing</a></li></ul></li></ul></li><li><a href="#material-and-appearances">Material and appearances</a></li><li><a href="#advanced-topics-in-rendering">Advanced topics in rendering</a></li><li><a href="#cameras-lenses-and-light-fields">Cameras, lenses and light fields</a></li></ul></nav><hr />
+<h2 id="2d变换">2D变换</h2>
+<h3 id="scale-matrix">scale matrix</h3>
+<p><img src="/_resources/56efdca1b32f4b449ac11b3c241fc612.png" /><br />
+<img src="/_resources/ef25e2f2482b47a1afb893ed77180708.png" /></p>
+<h3 id="reflection-matrix">reflection matrix</h3>
+<p><img src="/_resources/aa94a2a4efa141e8802d8072851fe1a7.png" /></p>
+<h3 id="shear-matrix">shear matrix</h3>
+<p><img src="/_resources/2a8a1dbb15e147248108516a3d83a379.png" /></p>
+<h3 id="rotateabout-the-origin00">rotate(about the origin(0,0))</h3>
+<p><img src="/_resources/6b02f1e79f004bb88fcd23d18f8faf4e.png" /></p>
+<h3 id="homogenous-coordimates齐次坐标系">homogenous coordimates(齐次坐标系)</h3>
+<p><img src="/_resources/0b964d7572da462d8d5e407935f14302.png" /></p>
+<p><img src="/_resources/9a7acca29f894ad594b983cb97a79f99.png" /></p>
+<h3 id="2d-tansformation-in-homogenous">2D tansformation in homogenous</h3>
+<p><img src="/_resources/79d3df6db5614196ac7887004e699e17.png" /></p>
+<h3 id="composing-transforms">composing transforms</h3>
+<p><strong>transform ordering matters!!!</strong></p>
+<p><img src="/_resources/90fcfd80d5f64c438758b0a126f0b627.png" /></p>
+<h2 id="坐标系统">坐标系统</h2>
+<p>各个空间，比如模型空间、世界空间、相机空间<br />
+<a>Opengl初级</a></p>
+<h2 id="3d变换">3D变换</h2>
+<h3 id="homogenous-coordimates">homogenous coordimates</h3>
+<p><img src="/_resources/c351340191284365980ed1f318d53a03.png" /></p>
+<h3 id="3d-transformations">3D transformations</h3>
+<p><img src="/_resources/81c21d964d5448dd85646cb205802436.png" /><br />
+<img src="/_resources/e5b4fd359c4a4e8283904b2fbb720e73.png" /></p>
+<p><img src="/_resources/f54775523e8a4c8d93241452d774a3f2.png" /></p>
+<p><img src="/_resources/30672aeb446241f0a628dd0357ea5a71.png" /></p>
+<h3 id="mvp-transformation-and-viewport">MVP transformation and viewport</h3>
+<p><img src="/_resources/4d6269a4c3d347c797bd2c53dd505b6f.png" /></p>
+<p><img src="/_resources/daf939a0b03c4fc1b70e2e2277d9524c.png" /></p>
+<p>待补充：<br />
+万向节死锁<br />
+四元数</p>
+<h4 id="model-transformation">model transformation</h4>
+<p>类似view transformation，还有一点是模型导入世界空间的时候的初始坐标？</p>
+<h4 id="view-transformation">view transformation</h4>
+<p><img src="/_resources/5c37520b566049c39a03fb9ac744d685.png" /></p>
+<p><img src="/_resources/0bea0e586a9c40f6829a24b47f4a81d5.png" /></p>
+<p><img src="/_resources/bed7ffcb3b194ee7b6e6ae489f5222ab.png" /></p>
+<p>更详细的参考虎书6.5</p>
+<h4 id="projection-transformation">projection transformation</h4>
+<p><img src="/_resources/8f1bddf50bd5440ca80649061f7b4fa1.png" /></p>
+<ul>
+<li>
+<p>Orthographic projection<br />
+<img src="/_resources/72d5cc5cd0b446d59726b5f4d3107a6b.png" /></p>
+</li>
+<li>
+<p>perspective projection<br />
+<img src="/_resources/850859217e4b4a0eb7d30f3cafed6d26.png" /></p>
+</li>
+</ul>
+<p><img src="/_resources/174c84de1e3244b096b47ecbffc8fb9c.png" /></p>
+<p><img src="/_resources/60f8c23b77ae4b9fbad88a74e1717bf3.png" /></p>
+<p><img src="/_resources/5eab9bd08c8542738dde8103c197149e.png" /></p>
+<p><img src="/_resources/d52d6f97d3414506a883818b4378931b.png" /></p>
+<ul>
+<li>helper param<br />
+field of view (fov Y) and aspect are used to define l, r, b, t<br />
+<img src="/_resources/4f3da23c6aa1439cb6c2e4a23399a041.png" /></li>
+</ul>
+<p>aspect ration = width / height</p>
+<h4 id="viewport-transformation">viewport transformation</h4>
+<p>??</p>
+<h2 id="rasterization">rasterization</h2>
+<p>rasterize == drawing onto the screen</p>
+<p>array of pixels</p>
+<p>games101's defination to pixels coodinator is different from the "tiger book".<br />
+<img src="/_resources/2aa6eaa250434b7f8dd0ea29b220c083.png" /></p>
+<p>canonical cube to screen-(viewport transformation)</p>
+<p><img src="/_resources/d33b9213f5534cebb37f56c0480caa08.png" /></p>
+<p>Triangle-fundamental shape primitives</p>
+<p>Sampling is a core idea in graphics.<br />
+视频是由一帧一帧的构成，是时间上的一个采样。</p>
+<p><img src="/_resources/dacfc3bd64684f1d9d05a4e3bb033c60.png" /></p>
+<p>aliasing and antialiasing<br />
+<img src="/_resources/520620cc1bd54c9b845b0c24ff56c4de.png" /></p>
+<p>Sampling artifacts</p>
+<p>Behind the aliasing artifacts:<br />
+signals are changing too fast (high frequency), but sampled too slowly.</p>
+<p><strong>antialiasing idea:</strong><br />
+blurring(pre-filtering) before sampling.</p>
+<p><img src="/_resources/4b3d1164e48b44aca5a3c7e4090428ed.png" /></p>
+<p>傅里叶级数展开。<br />
+<img src="/_resources/eb3d5b70e9974c039b8b46e5db764db3.png" /><br />
+把一个函数描述成一系列正余弦的组合。</p>
+<p>傅里叶变换，时域-&gt;频域。</p>
+<p>filtering = getting rid of certain frequency contents.<br />
+就是去掉一系列的频率。</p>
+<p>filtering = convolution=average<br />
+<img src="/_resources/d14265f65b1a40488462e7fe8aa8c5fe.png" /></p>
+<p>understand aliasing in frequency domain.<br />
+<img src="/_resources/4ba7195d94794283a6aa933770feb31b.png" /></p>
+<p>the solution to aliasing error.<br />
+option1: increase sampling rate.</p>
+<p>option2: antialiasing<br />
+blurring(pre-filtering) before sampling.<br />
+i.e. filtering out high frequencies before sampling.</p>
+<p><img src="/_resources/5b41ec122afe4c7295e9ac46f77bc369.png" /></p>
+<p>antialiasing by averaging values in pixel area.</p>
+<p><img src="/_resources/b31a943b4b134c968edba78b76385f15.png" /><br />
+1-pixel box??<br />
+<img src="/_resources/3c898bf267e244cc8cedcdb60eaf2e88.png" /><br />
+每个像素覆盖的平均？解决办法MSAA</p>
+<p><img src="/_resources/48495d0173e54eada9756ed906ae3fdd.png" /><br />
+MSAA解决的是信号的模糊，通过更多的采样点来确定像素的覆盖率，并不是提高分辨率。</p>
+<p>what's the cost of MSAA??<br />
+计算成分太高，工业界常用的方法？</p>
+<p>其他的抗锯齿算法：<br />
+FXAA:(Fast Approximate AA)<br />
+TAA(Temporal AA)</p>
+<p>super resolution:<br />
+DLSS(deep learning super sampling)</p>
+<p><strong>visibility / occlusion</strong></p>
+<ul>
+<li>
+<p>painter's algorithm</p>
+</li>
+<li>
+<p>z-buffering<br />
+<img src="/_resources/25f595baa20d482aa5f16fd330f7c916.png" /></p>
+</li>
+</ul>
+<p><img src="/_resources/abda5bba1138468caa200321902e05e8.png" /><br />
+O(n) for n triangles.</p>
+<p><img src="/_resources/65d468b505534c9cad9cf0ef9b1d305a.png" /><br />
+z-buffer透明物体处理不了</p>
+<h3 id="shading">shading</h3>
+<p>the process of applying a material to an object.</p>
+<h3 id="shading-model-blinn-phong-reflectance-model">shading model: blinn-phong reflectance model</h3>
+<p><img src="/_resources/52e8d83496d545129267b7e064c68e6c.png" /></p>
+<p><img src="/_resources/ca4a0ddbf9714b3ba0a4fd46cc3d538a.png" /></p>
+<p>shading != shadow</p>
+<p><img src="/_resources/dcd1bed81905436ca0bb7283776427bb.png" /><br />
+漫反射是向四面八方的，所以v向量的夹角是不用考虑的。<br />
+这只是个经验公式</p>
+<p><img src="/_resources/12c29cb1b9c74bf58d8c30107e89457f.png" /></p>
+<p><img src="/_resources/fd91d94bbbb34e4591dfeb35889c94c8.png" /><br />
+经验模型</p>
+<p><img src="/_resources/1c0c7dc7dd25479d81388cbd9b8ac0b4.png" /><br />
+p=100-300</p>
+<p>这里的环境光是非常非常简化的形式<br />
+<img src="/_resources/d94694e289924a2a82bc58badb4bcd9c.png" /></p>
+<p>这是一个简化模型<br />
+<img src="/_resources/56ad31912fb64b9e8ba16a31a5e2d59d.png" /></p>
+<h3 id="shading-frequencies">shading frequencies</h3>
+<ul>
+<li>flat shading: triangle face is flat——one normal vector</li>
+<li>gouraud shading: interpolate colors from vertices across tirangle。each vectex has a normal vector</li>
+<li>phong shading: 这是一种着色频率<br />
+<img src="/_resources/6c8e61b6485f4d4b97ff236f095ff76b.png" /></li>
+</ul>
+<p>如果模型足够复杂，逐面效果也不错，实际上选择什么取决于具体的物体<br />
+<img src="/_resources/c28f4523f8aa4b909b30d093cbfc3c37.png" /></p>
+<p>barycentric interpolation of vertex normal<br />
+don't forget to normalize the interpolated directions.</p>
+<h3 id="graphics-pipeline">graphics pipeline</h3>
+<p><img src="/_resources/8cabbdbde33e45d99610c8a7a2904495.png" /></p>
+<p>可编程shader</p>
+<h3 id="texture-mapping">texture mapping</h3>
+<p>定义一个点任意的属性</p>
+<p>任何三维物体的表面其实都是二维的。<br />
+<img src="/_resources/f905b404606c4f22bc06e39670c1bd5b.png" /><br />
+三维空间最基本的是一个三角形，三维空间中的三角形的顶点和纹理中的点相对应。<br />
+如何知道这个对应关系？？<br />
+美工来搞，或自动化实现</p>
+<p><img src="/_resources/287f33c5b2de4987bd98416ca5141cf1.png" /><br />
+0 &lt; u,v &lt; 1</p>
+<p>textures can be used multiple times.<br />
+<img src="/_resources/011465ea07164cb3b3e16d5711377396.jpg" /></p>
+<h3 id="interpolation-across-triangles-barycentric-coordinates">interpolation across triangles: barycentric coordinates</h3>
+<p>插值的目的：obtain smoothly varying values across triangles.</p>
+<p><img src="/_resources/2de822e31f6540a38c35fca8d021d853.png" /></p>
+<p><img src="/_resources/9a62822c18a84722b578997a900930d0.png" /></p>
+<p><img src="/_resources/5c4d132654b14f4e846eb6267ecf46f6.png" /></p>
+<p><img src="/_resources/1b741d7cb36241d7a42ba7bf490aa47a.jpg" /></p>
+<p>remember:<br />
+barycentric coordinates are not invariant under projection,<br />
+要插值三维空间中的一些属性，要放在三维空间中去做。<br />
+所以，对于像深度的插值需要在三维空间中做，然后应用到二维屏幕，涉及一个屏幕二维点逆变换到三维空间中这一个过程。</p>
+<p><img src="/_resources/8abd2c19b1cd4894b07013fb544a6594.png" /></p>
+<p>存在的问题：<br />
+纹理过小<br />
+贴到高分辨率的屏幕上，纹理就会被拉大。<br />
+非整数位置上纹理的值<br />
+多个pixel会映射到同一个texel这样。<br />
+<img src="/_resources/8e7ae3a29d2641c092025ec7f95e6697.png" /></p>
+<p>双线性插值：跟其他高级方法，质量还是差一些<br />
+<img src="/_resources/64299ac534664c918e2b9ce19b4d0db6.png" /></p>
+<p>存在的问题：<br />
+纹理过大<br />
+一个pixel覆盖了一片纹理<br />
+<img src="/_resources/7043d2deaa294028955b153a32a75446.png" /><br />
+在一个pixel中，纹理变化很大，频率很高，但却采用了一个采样点。</p>
+<p>在一个pixel中进行超采样可以，但计算代价太大。</p>
+<p>换个思路，我们不采样，而是get the average value within a range.<br />
+how can we do it? query range</p>
+<p>query range有多种，比如范围中的最大值最小值、平均值等。</p>
+<p>mipmap:可以做范围查询，但是是近似的正方形查询。<br />
+<img src="/_resources/a585f0dbb88148c2837620844f7018a3.png" /></p>
+<p><img src="/_resources/f9cb9b32d43e43c98ccaaa6741b512ac.png" /></p>
+<p><img src="/_resources/111148ccec6142e09ec4315f9ecd2da9.png" /></p>
+<p><img src="/_resources/af256dfb9e534e0183465fa8407eab87.png" /></p>
+<p><img src="/_resources/62d6ab598bbc488482741a5c0cee9ccd.png" /><br />
+找到mipmap对应层中的那个texel??</p>
+<p><img src="/_resources/a6f0ef58b3244237b6373848e5274b52.png" /></p>
+<p>如何查询1.8层？？<br />
+三线性插值<br />
+<img src="/_resources/4f8f1a284bd447bd8125fb2c5de59cb4.png" /></p>
+<p>三线性插值的结果：<br />
+<img src="/_resources/ae2b4417e989421dbed539882cb7dfa8.png" /></p>
+<p>mipmap到了远处会把所有的细节糊掉。<br />
+<img src="/_resources/0a911d6ba36d440ba3c2fc17af74371e.png" /></p>
+<p>各向异性过滤-解决mipmap中存在的overblur<br />
+<img src="/_resources/1c402eab777d4f65af15da202667c648.png" /></p>
+<p>对于矩形的查询不错，但对于斜着的就不行了。<br />
+<img src="/_resources/d929d4ce04e34103afa435c7fa3b6869.png" /></p>
+<p>EWA过滤<br />
+<img src="/_resources/7113d7c731ef4327835c07121445d895.png" /></p>
+<p><img src="/_resources/489c1f301e0a4be0aff2147f4c7838bc.png" /></p>
+<p>环境光照：<br />
+环境贴图<br />
+假设光源，我们只记录它的方向信息，认为他们无限远。<br />
+<img src="/_resources/7672dff3799d40f3b1a1a172eec3866a.png" /><br />
+纹理用来描述环境光。</p>
+<p>不同的环境光记录在球面上，然后展开，但会有扭曲问题<br />
+<img src="/_resources/e9925244a108476384991f51ffd0f53e.png" /></p>
+<p>解决扭曲的办法：记录在一个立方体上<br />
+<img src="/_resources/47f3b44ffc3b4bb68981574cb49c361a.png" /></p>
+<p>reference: <a title="https://www.youtube.com/watch?v=cM7RjEtZGHw" href="https://www.youtube.com/watch?v=cM7RjEtZGHw">Interactive Graphics 19 - Bump, Normal, Displacement, and Parallax Mapping</a></p>
+<h3 id="bump-vs-normal-vs-displacement-mapping">bump vs normal vs displacement mapping</h3>
+<p>凹凸贴图：（不常用了）<br />
+法线贴图<br />
+<img src="/_resources/f796d67a2564439785fe5e1f0c3901b2.png" /><br />
+任何一个点都可以通过纹理映射求出一个假的法线，通过假的法线可以得到一个假的结果，从而欺骗人的眼睛。实际上我们并没有改变几何。</p>
+<p>bump map中的texture是灰度图，代表的是高度。</p>
+<p><img src="/_resources/d1f26773b59d4de0a45c5d3112abc88d.png" /></p>
+<p><img src="/_resources/21730d32f30b4cf3a55de90229863b0f.png" /></p>
+<p><img src="/_resources/8b1fbbbefd3b4364b90ed88d4d1fcd30.png" /></p>
+<p><img src="/_resources/f3df9d342b274c52b8d3508027eb741b.png" /></p>
+<p><img src="/_resources/593cd727370c417b95d2bef6e1ff31aa.png" /><br />
+然后将计算出的法线重新计算回世界坐标里（设计坐标变换）??</p>
+<p><img src="/_resources/092381c601134f3a91d72eb17bfee91b.jpg" /></p>
+<p>位移贴图：</p>
+<p><img src="/_resources/fcbbb89fde744919a9c405594c0e6f07.png" /><br />
+Normal maps give your models fake depth, displacement maps give your models actual depth.<br />
+代价：要求三角形足够多，足够细<br />
+offline rendering<br />
+只移动vertex是不够的，还需要normal mapping一起来改变表面法线。</p>
+<p><img src="/_resources/dcd99edf8d2345d1a22ee268c736d3fe.png" /></p>
+<p>parallax mapping<br />
+<img src="/_resources/4918b6b8556d41b5b1eef4af365dce58.png" /></p>
+<p><img src="/_resources/35f110479e0640cdb41ed823fcb482a5.png" /></p>
+<p>切线空间    <a title="https://www.zhihu.com/question/23706933" href="https://www.zhihu.com/question/23706933">为什么要有切线空间（Tangent Space），它的作用是什么？</a></p>
+<p><a title="https://learnopengl.com/Advanced-Lighting/Normal-Mapping" href="https://learnopengl.com/Advanced-Lighting/Normal-Mapping">Normal Mapping-解释的很好</a></p>
+<p>补充一下关于坐标系转换的知识。</p>
+<p>3维纹理：<br />
+3维噪声<br />
+<img src="/_resources/b08c7d700c0749c5861d35e427e8acb2.png" /></p>
+<p>应用：provide precomputed shading</p>
+<p>应用：3D textures and volume rendering</p>
+<h2 id="geometry">geometry</h2>
+<p><img src="/_resources/5c1a678d222546888f1e254602c740fc.png" /></p>
+<h3 id="implicit-representaions-of-geometry">implicit representaions of geometry</h3>
+<p><img src="/_resources/5a8a319d07fe463eba0209cdc3eba2f8.png" /></p>
+<ul>
+<li>sampling can be hard</li>
+<li>inside / outside test easy</li>
+</ul>
+<p><img src="/_resources/5242104f27e3487cae27da657fd4cd0c.png" /></p>
+<p><img src="/_resources/7e969bb41ada4ef5bf6bf3bc8b47caef.png" /></p>
+<p><img src="/_resources/a6ff2c51bb1c4338a47c7f4d7aadd6ba.png" /></p>
+<p><img src="/_resources/8f4888e3241d4664add71865eabdf6f8.png" /></p>
+<p><img src="/_resources/6816f25e7e23485b9e52407cfa0eda82.png" /></p>
+<h3 id="explicit-representaions-of-geometry">explicit representaions of geometry</h3>
+<p><img src="/_resources/cfd1554e21d24e65929279bba96c6f14.png" /></p>
+<ul>
+<li>inside/outside test hard</li>
+</ul>
+<p><img src="/_resources/1c81bbd747e0424fb3773f7d40264650.png" /></p>
+<p><img src="/_resources/9f59bcca1d33459bb23d6d03d19dfe5b.png" /></p>
+<p><img src="/_resources/0327ded0ab9c406b86fc222d8eace03e.png" /></p>
+<h3 id="curves">curves</h3>
+<h4 id="bezier-curves贝塞尔曲线">bezier curves贝塞尔曲线</h4>
+<p><img src="/_resources/fd5ce158998e4322aeb74e1305c3b152.png" /></p>
+<p><img src="/_resources/3d62bb90e05a42968976c941dd5b8624.png" /></p>
+<p><img src="/_resources/9b6912c7a1504eb6be64963c042eb93c.png" /></p>
+<p><img src="/_resources/c177e918d9f947b2895ac77b90b15ca6.png" /></p>
+<p><img src="/_resources/86bda8a9743f41a2a7ba5b0152f1eeb3.png" /></p>
+<p><img src="/_resources/b754b9fdf16c4dfba5cee0bba93a3db2.png" /></p>
+<p>1自己的n阶展开。<br />
+<img src="/_resources/be72b192b0f149bead30927f77857b78.png" /></p>
+<p><img src="/_resources/ac736cb5443a40b8a4ddd08be350cb72.png" /></p>
+<p>piecewise bezier curves</p>
+<p><img src="/_resources/786ceda308f8496cb062144cda2ccf82.png" /></p>
+<p><img src="/_resources/e9e8e9bb2c6f41cd913aca15e6854a26.png" /></p>
+<h4 id="splines-样条">splines 样条</h4>
+<p><img src="/_resources/b329ba421a7941e09455419b06f2e1f7.png" /></p>
+<p><img src="/_resources/8507acc5b4244cc38a196946d5fdaebf.png" /><br />
+局部性<br />
+<img src="/_resources/29b0a2a176cd4789b147f12d90a039ff.png" /></p>
+<h3 id="surfaces">surfaces</h3>
+<h4 id="bezier-surfaces">bezier surfaces</h4>
+<p><img src="/_resources/b9ae49f94fed474bbea827bf7ff9ed7b.png" /></p>
+<p><img src="/_resources/0c4be08654e4434c913d64f0ecbae9a0.png" /></p>
+<p><img src="/_resources/945078bc5250494cac85b28ca0d83c07.png" /></p>
+<h4 id="mesh-operations">mesh operations</h4>
+<p><img src="/_resources/f6cc95fb9e33499e88efe91e2700489d.png" /></p>
+<p>细分 subdivision<br />
+<img src="/_resources/d4e98cc6abb64563941dd74697b07d59.png" /></p>
+<p><img src="/_resources/5236a0fa08754ddcbc3d20359b159f9b.png" /></p>
+<p><img src="/_resources/5cbc4fa9d7664800bd6ebebf0d9da6ac.png" /></p>
+<p><img src="/_resources/95ceacee8672495e81d08dbfa20a84e6.png" /></p>
+<p><img src="/_resources/7b1e97e212954dbfb851387297e16360.png" /></p>
+<p><img src="/_resources/a353796d2ccc47958f2177e65e2d7762.png" /></p>
+<p><img src="/_resources/4719c261b9a741639a77356025997d25.png" /></p>
+<p><img src="/_resources/a61d1bd745c34ac4b0842b2ec4db2bbd.png" /></p>
+<p><img src="/_resources/7dc569941102443dba96fd4b8028c429.png" /><br />
+loop细分只能用于三角形面，而catmull细分可以用于任何面。</p>
+<p><img src="/_resources/106a4edfe29343c28fd10aa487da1bcb.png" /></p>
+<p><img src="/_resources/7a28d1922cb54f31aab9d0a9c6a4ce25.png" /></p>
+<p><img src="/_resources/5d39aea892924fcea0f0f8c29ef65e8d.png" /></p>
+<p><img src="/_resources/ac8985c2ca564f46ae81578c159c06ca.png" /></p>
+<p>0:49:42 shadow</p>
+<h2 id="ray-tracing">ray tracing</h2>
+<h3 id="whitted-style-ray-tracing">whitted-style ray-tracing</h3>
+<p>whitted-style ray-tracing: simplification</p>
+<ul>
+<li>always perform specular reflections/refractions</li>
+<li>stop bouncing at diffuse surfaces</li>
+</ul>
+<p>whitted-style ray tracing: problem:</p>
+<ul>
+<li>for glossy materials, can't perform well</li>
+<li>no reflection between diffuse materials is not true</li>
+</ul>
+<p><img src="/_resources/da47a1de5beb4aa5bac41a98ad1c5fdc.png" /></p>
+<h4 id="ray-surface-intersection">ray-surface intersection</h4>
+<p><img src="/_resources/927aad5c06244a2fb20042f4c96e261a.png" /></p>
+<p><img src="/_resources/e0a1c35d8d534b50adc3506677703ad2.jpg" /></p>
+<p><img src="/_resources/4c5add5537cf4dfeabb1b87c0cba42bf.png" /></p>
+<p><img src="/_resources/efdb096e870f4f8d853b26569f1b7442.png" /></p>
+<h4 id="accelerating-ray-surfacetriangle-intersection">accelerating ray-surface(triangle) intersection</h4>
+<p>using AABBs to accelerate ray tracing</p>
+<p><img src="/_resources/b0f868d25825461397db9e576d40de78.png" /></p>
+<p><img src="/_resources/dc3e8f09a77447cda7264d14bcf56eb0.png" /></p>
+<p><img src="/_resources/fc4f605c508c4180ba2919c06e444e9d.png" /></p>
+<p><img src="/_resources/ab6920639ff143309ecca2604ef9f32a.png" /></p>
+<h4 id="uniform-spatial-partitionsgrids">uniform spatial partitions(grids)</h4>
+<p>类似均匀的划分</p>
+<h4 id="spatial-partitioning">spatial partitioning</h4>
+<p><img src="/_resources/e53ff8d0c53d4db8b86c2b0d8c51f8c1.png" /></p>
+<p><img src="/_resources/340e4742b98a43afadf7b43bfed0e6cb.png" /></p>
+<p><img src="/_resources/9c4d0e2f6e604573be25a96f9aef44e0.png" /><br />
+kd-tree不太好用</p>
+<h4 id="object-partitions-bounding-volume-hierarchybvh">object partitions &amp; bounding volume hierarchy(BVH)*</h4>
+<p>解决了kd-tree存在的两个问题。</p>
+<p><img src="/_resources/9a4fba04177243bf84821593d51fc6a6.png" /></p>
+<p><img src="/_resources/386b7d4262d94596830801f4d75ef4af.png" /></p>
+<p><img src="/_resources/c7bd7e9a79124b138c75b90580e2d9d3.png" /></p>
+<p><img src="/_resources/9ed6dcf20ca84c4f9f864db8f0486584.png" /></p>
+<p>P14 0::55:57</p>
+<h3 id="basic-radiometry辐射度量学">basic radiometry(辐射度量学)</h3>
+<p>问题：更精确的度量会生成更真实的，比如对于二次元风格的游戏有必要非常真实吗？</p>
+<p><img src="/_resources/19c42a1d6b414197890b1b8642fa6eeb.png" /></p>
+<h4 id="radiant-energy-and-fluxpower">radiant energy and flux(power)</h4>
+<p><img src="/_resources/5beef898f33146dc81ec89eed8ec1ca4.png" /></p>
+<p><img src="/_resources/5803abf7aac54be0900e0bd7d2ea7999.png" /></p>
+<p><img src="/_resources/cc2460916b444f2d8d166cf364329e03.png" /></p>
+<p><img src="/_resources/454439d667794465a56eb392a1f7dbd4.png" /></p>
+<p><img src="/_resources/3a6783f1e69246c1a76a6618a6b75ccc.png" /></p>
+<p><img src="/_resources/0743c65b8bdc444e8cca16f11136b994.png" /></p>
+<h4 id="irradiance-and-radiance">irradiance and radiance</h4>
+<p><img src="/_resources/3880c42690e54abaa49f598afab14b8a.png" /></p>
+<p><img src="/_resources/ed74eb1f75eb40e5a25b87910f5b3a48.png" /></p>
+<p><img src="/_resources/9eb1ea12bf3a45c28e9274ab4d1fa0e4.png" /></p>
+<p><img src="/_resources/9b9cca2b667f453988d04ca98f65201a.png" /></p>
+<p><img src="/_resources/ce4b32959b7b4d959088b6c1b1691536.png" /></p>
+<p><img src="/_resources/bc9f86b07ab342e58c2f0a1c1d617d8c.png" /></p>
+<p><img src="/_resources/8129c022914f4a9083766249ac17dafd.png" /></p>
+<h4 id="brdf">BRDF</h4>
+<p>bidirectional Reflectance Distribution Function(BRDF)</p>
+<p><img src="/_resources/f46897b1d93a4888adae4121aa89ad74.png" /></p>
+<h4 id="reflection-equation">reflection equation</h4>
+<p><img src="/_resources/b5171f15087c40b090fc611c169f1059.png" /></p>
+<h4 id="rendering-equation">rendering equation</h4>
+<p>再加一个自发光项<br />
+<img src="/_resources/9607dd7b6fc14f45b7595dcaecd9a9ec.png" /></p>
+<p><img src="/_resources/0016754a361b455eab3757d2aa70ab47.png" /></p>
+<p><img src="/_resources/b7557ca8dd6a4848a4aeb5f1ab0dc776.png" /><br />
+global illumination<br />
+全局=直接和间接光照的集合</p>
+<p>概率论补充<br />
+<img src="/_resources/3bf4539e7086434aa87ebe5244cca8ef.png" /></p>
+<h4 id="monte-carlo-path-tracing">Monte Carlo Path Tracing</h4>
+<p><img src="/_resources/952147cb0b4e474a9248122094bd9ef1.png" /></p>
+<p><img src="/_resources/e586d551209f4f2b9e8ed653794429ab.png" /></p>
+<p><img src="/_resources/896a1ef4e0af45ce8db74a84fdae3698.png" /></p>
+<p><img src="/_resources/e6975188bdbb47e3aabc010891fe3870.png" /></p>
+<p><img src="/_resources/ef6112d58d77476e9c0d3c70d2770d0c.png" /></p>
+<p><img src="/_resources/7f0372c7488343c59c4e32ff907958f7.png" /></p>
+<p><img src="/_resources/691223fc08c74ac3abb9bcca81fed21f.png" /></p>
+<p><img src="/_resources/adc761f485e74da2926d17ca4cb0dc84.png" /></p>
+<p><img src="/_resources/710a75eea3b2468591f86290463b114b.png" /></p>
+<p><img src="/_resources/5e22268beb494982ac479bed6f576ef7.png" /></p>
+<p><img src="/_resources/6d5399af39b145b3b6994cc2d76c7a97.png" /></p>
+<p><img src="/_resources/b3848a871864467e88797741e6239167.png" /></p>
+<p><img src="/_resources/920ceb873e284b299bbea6ddcabe5ac4.png" /></p>
+<p><img src="/_resources/841da4b583a64e5d9f8d3c3709648a67.png" /></p>
+<p><img src="/_resources/eb6ae521fa72468f81f0d1f2585560c3.png" /></p>
+<p><img src="/_resources/d1fd9c1be24c415c9b3fa856e3315a8b.png" /></p>
+<p>点光源不好处理，可以简单看做面积很小的面光源。</p>
+<h2 id="material-and-appearances">Material and appearances</h2>
+<p>material == BRDF</p>
+<p>glossy material<br />
+ideal reflective/refractive material<br />
+<img src="/_resources/f96c5d77b1594f7daad309cf5923384f.png" /></p>
+<p><img src="/_resources/0e1d8f6639544d7f9a8c5916a4162309.png" /></p>
+<p><img src="/_resources/c87bd994f02f4521b9df72a5d08cdecc.png" /></p>
+<p>Fresnel reflection/term<br />
+??</p>
+<p>microfacet material(微表面材质)<br />
+在近处看的是几何，远处看的是材质。</p>
+<p><img src="/_resources/7f6e7652ad2445e2bcd2f81d279dedfa.png" /></p>
+<p><img src="/_resources/6c9d777fddeb40e6a2225f285ab5f4f0.png" /></p>
+<p>microfacet BRDF<br />
+<img src="/_resources/338e5153613e4453911d5f77ce5ab90d.png" /></p>
+<p>lsotropic/anisotropic materials (各向同性、各向异性)<br />
+<img src="/_resources/4625b9d267e24547bdad933d771b8f26.png" /></p>
+<p>measuring BRDFs<br />
+<img src="/_resources/c5fa0026f0cb4729bf9f41c39b432531.png" /></p>
+<h2 id="advanced-topics-in-rendering">Advanced topics in rendering</h2>
+<p><img src="/_resources/539d2b5730c54be9b3175335649a703b.png" /></p>
+<h2 id="cameras-lenses-and-light-fields">Cameras, lenses and light fields</h2>
+</div>
+      </article>
+    </div>
+  </body>
+</html>

@@ -42,9 +42,9 @@
         <div class="article-content markdown-body"><nav class="table-of-contents"><ul><li><a href="#new的行为">new的行为</a></li><li><a href="#delete的行为">delete的行为</a></li><li><a href="#重载全局new-deletenew-delete">重载全局new delete/new[] delete[]</a></li><li><a href="#重载成员new-deletenew-delete">重载成员new delete/new[] delete[]</a></li><li><a href="#重载newdelete-placement-new">重载new()/delete()    placement new</a></li><li><a href="#allocator类">allocator类</a></li><li><a href="#智能指针">智能指针</a><ul><li><a href="#三种智能指针的api">三种智能指针的API</a></li><li><a href="#使用智能指针中的注意事项">使用智能指针中的注意事项</a><ul><li><a href="#shared_ptr">shared_ptr</a></li></ul></li><li><a href="#源码分析">源码分析</a><ul><li><a href="#shared_ptr和weak_ptr">shared_ptr和weak_ptr</a></li></ul></li></ul></li></ul></nav><hr />
 <h2 id="new的行为">new的行为</h2>
 <p>void* operator new(size_t sz) throw(); 源码位置：libsupc++/new_op.cc/</p>
-<p><img src="/_resources/b103a40affae4670b1649367d9cd39a6.jpg" /></p>
+<p><img src=":/b103a40affae4670b1649367d9cd39a6" alt="2022-03-06_15-20-36.jpg" /></p>
 <h2 id="delete的行为">delete的行为</h2>
-<p><img src="/_resources/1e30b71e220b4cc087f8c58bd08972f9.jpg" /></p>
+<p><img src=":/1e30b71e220b4cc087f8c58bd08972f9" alt="2022-03-06_15-25-53.jpg" /></p>
 <h2 id="重载全局new-deletenew-delete">重载全局new delete/new[] delete[]</h2>
 <p>全局的影响很远<br />
 new[]下面所占的大小要额外加上一个计数器。</p>
@@ -62,7 +62,7 @@ new[]  -&gt; void* operator new[](xxxx)</p>
 <p>我们知道使用new操作符分配内存需要在堆中查找足够大的剩余空间，这个操作速度是很慢的，而且有可能出现无法分配内存的异常（空间不够）。placement new就可以解决这个问题。我们构造对象都是在一个预先准备好了的内存缓冲区中进行，不需要查找内存，内存分配的时间是常数；而且不会出现在程序运行中途出现内存不足的异常。所以，placement new非常适合那些对时间要求比较高，长时间运行不希望被打断的应用程序。</p>
 <p><a title="https://blog.csdn.net/zhangxinrun/article/details/5940019" href="https://blog.csdn.net/zhangxinrun/article/details/5940019">一篇讲的挺棒的博文</a></p>
 <p>下面这是另一种形式：<br />
-<img src="/_resources/4ad7d7e9002b44f99521b4c588d220ed.jpg" /></p>
+<img src=":/4ad7d7e9002b44f99521b4c588d220ed" alt="2022-03-14_10-42-47.jpg" /></p>
 <h2 id="allocator类">allocator类</h2>
 <p>将内存分配和对象构造分开。提供了一种类型感知的内存分配方法，它分配的内存是原始的、未构造的。</p>
 <p>new不灵活呗，不灵活体现在内存分配和对象构造是一起的。<span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="red"><mtext>有啥不好的吗</mtext></mstyle></mrow><annotation encoding="application/x-tex">\color{red}{有啥不好的吗}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em"></span><span class="mord" style="color:red"><span class="mord cjk_fallback" style="color:red">有啥不好的吗</span></span></span></span></span></span></p>
@@ -143,7 +143,7 @@ new[]  -&gt; void* operator new[](xxxx)</p>
 <p>位置：shared_ptr以及weak_ptr -&gt; include/tr1/shared_ptr.h<br />
 位置：unique_ptr        -&gt;  include/bits/unique_ptr.h</p>
 <h4 id="shared_ptr和weak_ptr">shared_ptr和weak_ptr</h4>
-<p><img src="/_resources/0b25622e476b4087b1aa43318409981c.jpg" /></p>
+<p><img src=":/0b25622e476b4087b1aa43318409981c" alt="2022-06-01_10-16-04.jpg" /></p>
 </div>
       </article>
     </div>
