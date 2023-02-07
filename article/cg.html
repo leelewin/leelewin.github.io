@@ -24,8 +24,8 @@
                 ></span
               >
               <span
-                >Updated At：<time datetime="1647322536797"
-                  >2022-03-15 13:35</time
+                >Updated At：<time datetime="1675426183469"
+                  >2023-02-03 20:09</time
                 ></span
               >
             </div>
@@ -49,6 +49,14 @@
 <p><img src="/_resources/2a8a1dbb15e147248108516a3d83a379.png" /></p>
 <h3 id="rotateabout-the-origin00">rotate(about the origin(0,0))</h3>
 <p><img src="/_resources/6b02f1e79f004bb88fcd23d18f8faf4e.png" /></p>
+<p>坐标变换的顺序为：先缩放-&gt;旋转-&gt;平移<br />
+这时因为：<br />
+在物体刚刚放入世界坐标系的时候使用的是本地坐标，也就是本地和全局坐标系的原点和坐标轴都是重合的（当然两者分别使用了左右手坐标系时除外 - 那是BUG），此时所有物体都“把世界坐标系当做自己的本地坐标系”。<br />
+而经过了坐标变换之后：<br />
+缩放变换不改变坐标轴的走向，也不改变原点的位置，所以两个坐标系仍然重合。<br />
+旋转变换改变坐标轴的走向，但不改变原点的位置，所以两个坐标系坐标轴不再处于相同走向。<br />
+平移变换不改变坐标轴走向，但改变原点位置，两个坐标系原点不再重合。</p>
+<p>这样就可以解释问什么缩放不能在旋转之后，而缩放和旋转都不能在平移之后了。 于是没有问题的顺序只能是 缩放 -&gt; 旋转 -&gt; 平移 。</p>
 <h3 id="homogenous-coordimates齐次坐标系">homogenous coordimates(齐次坐标系)</h3>
 <p><img src="/_resources/0b964d7572da462d8d5e407935f14302.png" /></p>
 <p><img src="/_resources/9a7acca29f894ad594b983cb97a79f99.png" /></p>
@@ -71,14 +79,16 @@
 <h3 id="mvp-transformation-and-viewport">MVP transformation and viewport</h3>
 <p><img src="/_resources/4d6269a4c3d347c797bd2c53dd505b6f.png" /></p>
 <p><img src="/_resources/daf939a0b03c4fc1b70e2e2277d9524c.png" /></p>
-<p>待补充：<br />
+<p><img src="/_resources/feef206881f14099a0f87a56620b75f8.png" /><br />
+待补充：<br />
 万向节死锁<br />
 四元数</p>
 <h4 id="model-transformation">model transformation</h4>
-<p>类似view transformation，还有一点是模型导入世界空间的时候的初始坐标？</p>
+<p>将物体放置在世界坐标指定的位置，可以理解为物体刚被导入时都放置在世界原点，然后通过model transformation放置到指定位置。</p>
 <h4 id="view-transformation">view transformation</h4>
 <p><img src="/_resources/5c37520b566049c39a03fb9ac744d685.png" /></p>
-<p><img src="/_resources/0bea0e586a9c40f6829a24b47f4a81d5.png" /></p>
+<p><img src="/_resources/0bea0e586a9c40f6829a24b47f4a81d5.png" /><br />
+注意相机原点不与世界原点重合，不要混淆。</p>
 <p><img src="/_resources/bed7ffcb3b194ee7b6e6ae489f5222ab.png" /></p>
 <p>更详细的参考虎书6.5</p>
 <h4 id="projection-transformation">projection transformation</h4>

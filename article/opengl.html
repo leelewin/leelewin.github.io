@@ -25,15 +25,15 @@
                 ></span
               >
               <span
-                >Updated At：<time datetime="1655278828465"
-                  >2022-06-15 15:40</time
+                >Updated At：<time datetime="1675682095969"
+                  >2023-02-06 19:14</time
                 ></span
               >
             </div>
             
           </div>
         </header>
-        <div class="article-content markdown-body"><nav class="table-of-contents"><ul><li><a href="#核心模式和立即渲染模式">核心模式和立即渲染模式</a></li><li><a href="#状态机">状态机</a></li><li><a href="#对象">对象</a></li><li><a href="#glfw">GLFW</a></li><li><a href="#glad">GLAD</a></li><li><a href="#常用对象">常用对象</a><ul><li><a href="#vertex-buffer-object">vertex buffer object</a></li><li><a href="#vertex-array-object">vertex array object</a></li><li><a href="#element-buffer-objectindex">element buffer object(index)</a></li></ul></li><li><a href="#shader-with-glsl">shader with GLSL</a><ul><li><a href="#数据类型">数据类型</a><ul><li><a href="#vector">vector</a></li><li><a href="#matirx">matirx</a></li><li><a href="#结构体">结构体</a></li><li><a href="#sampler采样器">sampler采样器</a></li></ul></li><li><a href="#build-in-function">build-in function</a></li><li><a href="#inputoutput">input/output</a></li><li><a href="#uniform">Uniform</a></li></ul></li><li><a href="#纹理">纹理</a><ul><li><a href="#纹理环绕方式">纹理环绕方式</a></li><li><a href="#纹理过滤">纹理过滤</a></li><li><a href="#多级渐远纹理mipmap">多级渐远纹理（mipmap）</a></li><li><a href="#加载和创建纹理">加载和创建纹理</a><ul><li><a href="#图像加载库stb_imageh">图像加载库（stb_image.h）</a></li><li><a href="#生成纹理">生成纹理</a></li></ul></li><li><a href="#应用纹理">应用纹理</a><ul><li><a href="#纹理单元">纹理单元</a></li></ul></li></ul></li><li><a href="#2d变换3d变换">2D变换/3D变换</a><ul><li><a href="#数学">数学</a></li><li><a href="#glm-opengl-mathmatics">GLM (opengl mathmatics)</a></li></ul></li><li><a href="#坐标系统">坐标系统</a><ul><li><a href="#概述">概述</a></li><li><a href="#对象模型局部空间">对象(模型\局部)空间</a></li><li><a href="#世界空间">世界空间</a></li><li><a href="#嵌套坐标空间补充">嵌套坐标空间（补充）</a></li><li><a href="#相机观察空间">相机(观察)空间</a></li><li><a href="#裁剪空间">裁剪空间</a><ul><li><a href="#正交投影">正交投影</a></li><li><a href="#透视投影">透视投影</a></li></ul></li><li><a href="#屏幕空间">屏幕空间</a></li><li><a href="#compose">compose</a></li><li><a href="#右手坐标系">右手坐标系</a></li><li><a href="#z-buffer">Z-Buffer</a></li></ul></li><li><a href="#摄像机">摄像机</a><ul><li><a href="#camera-space">camera space</a></li><li><a href="#lookat">lookat</a></li><li><a href="#自由移动">自由移动</a></li><li><a href="#移动速度和时间差">移动速度和时间差</a></li><li><a href="#视角移动">视角移动</a><ul><li><a href="#欧拉角">欧拉角</a></li><li><a href="#鼠标输入">鼠标输入</a></li><li><a href="#缩放">缩放</a></li></ul></li></ul></li><li><a href="#光照">光照</a></li><li><a href="#模型加载">模型加载</a><ul><li><a href="#assimp">Assimp</a></li><li><a href="#模型加载库">模型加载库</a></li></ul></li></ul></nav><h2 id="核心模式和立即渲染模式">核心模式和立即渲染模式</h2>
+        <div class="article-content markdown-body"><nav class="table-of-contents"><ul><li><a href="#核心模式和立即渲染模式">核心模式和立即渲染模式</a></li><li><a href="#状态机">状态机</a></li><li><a href="#对象">对象</a></li><li><a href="#glfw">GLFW</a></li><li><a href="#glad">GLAD</a></li><li><a href="#常用对象">常用对象</a><ul><li><a href="#vertex-buffer-object">vertex buffer object</a></li><li><a href="#vertex-array-object">vertex array object</a></li><li><a href="#element-buffer-objectindex">element buffer object(index)</a></li></ul></li><li><a href="#shader-with-glsl">shader with GLSL</a><ul><li><a href="#数据类型">数据类型</a><ul><li><a href="#vector">vector</a></li><li><a href="#matirx">matirx</a></li><li><a href="#结构体">结构体</a></li><li><a href="#sampler采样器">sampler采样器</a></li></ul></li><li><a href="#build-in-function">build-in function</a></li><li><a href="#inputoutput">input/output</a></li><li><a href="#uniform">Uniform</a></li></ul></li><li><a href="#纹理">纹理</a><ul><li><a href="#纹理环绕方式">纹理环绕方式</a></li><li><a href="#纹理过滤">纹理过滤</a></li><li><a href="#多级渐远纹理mipmap">多级渐远纹理（mipmap）</a></li><li><a href="#加载和创建纹理">加载和创建纹理</a><ul><li><a href="#图像加载库stb_imageh">图像加载库（stb_image.h）</a></li><li><a href="#生成纹理">生成纹理</a></li></ul></li><li><a href="#应用纹理">应用纹理</a><ul><li><a href="#纹理单元">纹理单元</a></li></ul></li></ul></li><li><a href="#2d变换3d变换">2D变换/3D变换</a><ul><li><a href="#数学">数学</a></li><li><a href="#glm-opengl-mathmatics">GLM (opengl mathmatics)</a></li></ul></li><li><a href="#坐标系统">坐标系统</a><ul><li><a href="#概述">概述</a></li><li><a href="#对象模型局部空间">对象(模型\局部)空间</a></li><li><a href="#世界空间">世界空间</a></li><li><a href="#嵌套坐标空间补充">嵌套坐标空间（补充）</a></li><li><a href="#相机观察空间">相机(观察)空间</a></li><li><a href="#裁剪空间">裁剪空间</a><ul><li><a href="#正交投影">正交投影</a></li><li><a href="#透视投影">透视投影</a></li></ul></li><li><a href="#屏幕空间">屏幕空间</a></li><li><a href="#compose">compose</a></li><li><a href="#右手坐标系">右手坐标系</a></li><li><a href="#z-buffer">Z-Buffer</a></li></ul></li><li><a href="#摄像机">摄像机</a><ul><li><a href="#camera-space">camera space</a></li><li><a href="#lookat">lookat</a></li><li><a href="#自由移动">自由移动</a></li><li><a href="#移动速度和时间差">移动速度和时间差</a></li><li><a href="#视角移动">视角移动</a><ul><li><a href="#欧拉角">欧拉角</a></li><li><a href="#鼠标输入">鼠标输入</a></li><li><a href="#缩放">缩放</a></li></ul></li></ul></li><li><a href="#光照">光照</a><ul><li><a href="#冯光照模型">冯光照模型：</a></li><li><a href="#材质">材质</a></li><li><a href="#光照贴图">光照贴图：</a></li><li><a href="#投光物">投光物</a></li></ul></li><li><a href="#模型加载">模型加载</a><ul><li><a href="#assimp">Assimp</a></li><li><a href="#模型加载库">模型加载库</a></li></ul></li></ul></nav><h2 id="核心模式和立即渲染模式">核心模式和立即渲染模式</h2>
 <p>Immediate mode(又叫固定渲染管线)<br />
 Core-profile</p>
 <p>基于opengl3.3</p>
@@ -81,6 +81,8 @@ glGenBuffers(1, &amp;buffer);<br />
 <a title="https://www.zhihu.com/question/39082624" href="https://www.zhihu.com/question/39082624">VAO和EBO解绑定的坑？</a></p>
 <p>自己碰到的问题就是自己封装的类在析构的时候会把id删除了。</p>
 <h2 id="shader-with-glsl">shader with GLSL</h2>
+<p><a title="https://www.cnblogs.com/brainworld/p/7445290.html" href="https://www.cnblogs.com/brainworld/p/7445290.html">着色器语言 GLSL (opengl-shader-language)入门大全</a></p>
+<p><a title="https://zhuanlan.zhihu.com/p/349296191" href="https://zhuanlan.zhihu.com/p/349296191">GL Shader Language（GLSL）详解-基础语法</a></p>
 <p>着色器是使用一种叫GLSL的类C语言写成的。GLSL是为图形计算量身定制的，它包含一些针对向量和矩阵操作的有用特性。</p>
 <p>着色器的开头总是要声明版本，接着是输入和输出变量、uniform和main函数。每个着色器的入口点都是main函数，在这个函数中我们处理所有的输入变量，并将结果输出到输出变量中</p>
 <p>当我们特别谈论到顶点着色器的时候，每个输入变量也叫顶点属性(Vertex Attribute)。我们能声明的顶点属性是有上限的，它一般由硬件来决定。OpenGL确保至少有16个包含4分量的顶点属性可用，但是有些硬件或许允许更多的顶点属性，你可以查询GL_MAX_VERTEX_ATTRIBS来获取具体的上限：</p>
@@ -94,6 +96,7 @@ glGenBuffers(1, &amp;buffer);<br />
 <p><img src="/_resources/1526536b2b5d414aa78e98138e1ebf26.png" /></p>
 <h4 id="matirx">matirx</h4>
 <h4 id="结构体">结构体</h4>
+<p>GLSL中一个结构体在设置uniform时并无任何区别，结构体只是充当uniform变量们的一个命名空间。所以如果想填充这个结构体的话，我们必须设置每个单独的uniform，但要以结构体名为前缀。</p>
 <h4 id="sampler采样器">sampler采样器</h4>
 <p>sampler1D、sampler2D 。。。。</p>
 <p>采样器必须使用 uniform关键字来修饰</p>
@@ -207,7 +210,8 @@ gl<span class="hljs-constructor">UniformMatrix4fv(<span class="hljs-params">tran
 <p>局部空间是指物体所在的坐标空间，即对象最开始所在的地方。想象你在一个建模软件（比如说Blender）中创建了一个立方体。你创建的立方体的原点有可能位于(0, 0, 0)，即便它有可能最后在程序中处于完全不同的位置。甚至有可能你创建的所有模型都以(0, 0, 0)为初始位置（译注：然而它们会最终出现在世界的不同位置）。所以，<strong>你的模型的所有顶点都是在模型空间中</strong>：它们相对于你的物体来说都是局部的。</p>
 <h3 id="世界空间">世界空间</h3>
 <p>世界坐标系是一个特殊的坐标系，它为所有其他要指定的坐标系建立了“全局”参考系。<br />
-如果我们将我们所有的物体导入到程序当中，它们有可能会全挤在世界的原点(0, 0, 0)上，这并不是我们想要的结果。我们想为每一个物体定义一个位置，从而能在更大的世界当中放置它们。世界空间中的坐标正如其名：是指顶点相对于（游戏）世界的坐标。如果你希望将物体分散在世界上摆放（特别是非常真实的那样），这就是你希望物体变换到的空间。物体的坐标将会从局部变换到世界空间；该变换是由模型矩阵(Model Matrix)实现的。</p>
+如果我们将我们所有的物体导入到程序当中，它们有可能会全挤在世界的原点(0, 0, 0)上，这并不是我们想要的结果。我们想为每一个物体定义一个位置，从而能在更大的世界当中放置它们。世界空间中的坐标正如其名：是指顶点相对于（游戏）世界的坐标。<br />
+如果你希望将物体分散在世界上摆放（特别是非常真实的那样），这就是你希望物体变换到的空间。物体的坐标将会从局部变换到世界空间；该变换是由模型矩阵(Model Matrix)实现的。（就是初始都挤在世界原点，然后通过模型变换放置到世界空间不同的位置）</p>
 <p>想要在世界中定位物体，只需指定其原点的位置以及其在世界空间中轴方向即可。</p>
 <h3 id="嵌套坐标空间补充">嵌套坐标空间（补充）</h3>
 <p>一个例子：<br />
@@ -327,6 +331,52 @@ opengl传统上是右手坐标系统，-z指向屏幕，+z朝向观众。</p>
 <code>glfwSetScrollCallback(window, scroll_callback);</code></p>
 <p><a title="https://github.com/cybercser/OpenGL_3_3_Tutorial_Translation/blob/master/Tutorial%2017%20Rotations.md" href="https://github.com/cybercser/OpenGL_3_3_Tutorial_Translation/blob/master/Tutorial%2017%20Rotations.md">四元数实现相机</a></p>
 <h2 id="光照">光照</h2>
+<p>物体的颜色就是物体从一个光源反射的各个颜色的分量的大小。</p>
+<h3 id="冯光照模型">冯光照模型：</h3>
+<p>环境光照<br />
+漫反射光照<br />
+镜面光照</p>
+<p>如果在世界坐标系中计算冯shading需要变换法向量。<br />
+首先，法向量只是一个方向向量，不能表达空间中的特定位置。同时，法向量没有齐次坐标（顶点位置中的w分量）。这意味着，位移不应该影响到法向量。因此，如果我们打算把法向量乘以一个模型矩阵，我们就要从矩阵中移除位移部分，只选用模型矩阵左上角3×3的矩阵（注意，我们也可以把法向量的w分量设置为0，再乘以4×4矩阵；这同样可以移除位移）。对于法向量，我们只希望对它实施缩放和旋转变换。</p>
+<p><strong>注意：片段着色器的计算中的每个量要在同一个坐标系下（比如：世界坐标系或相机坐标系或切线坐标系）。</strong></p>
+<p>法线矩阵：<br />
+每当我们应用一个不等比缩放时（注意：等比缩放不会破坏法线，因为法线的方向没被改变，仅仅改变了法线的长度，而这很容易通过标准化来修复），法向量就不会再垂直于对应的表面了，这样光照就会被破坏。<br />
+修复这个行为的诀窍是使用一个为法向量专门定制的模型矩阵。这个矩阵称之为法线矩阵(Normal Matrix)，它使用了一些线性代数的操作来移除对法向量错误缩放的影响<br />
+法线矩阵被定义为「模型矩阵左上角3x3部分的逆矩阵的转置矩阵」</p>
+<p>光照的计算既可以在世界空间进行，又可以在观察空间进行。<br />
+我们选择在世界空间进行光照计算，但是大多数人趋向于更偏向在观察空间进行光照计算。在观察空间计算的优势是，观察者的位置总是在(0, 0, 0)，所以你已经零成本地拿到了观察者的位置。然而，若以学习为目的，我认为在世界空间中计算光照更符合直觉。如果你仍然希望在观察空间计算光照的话，你需要将所有相关的向量也用观察矩阵进行变换（不要忘记也修改法线矩阵）。</p>
+<p>矩阵求逆是一项对于着色器开销很大的运算，因为它必须在场景中的每一个顶点上进行，所以应该尽可能地避免在着色器中进行求逆运算</p>
+<h3 id="材质">材质</h3>
+<p>在现实世界里，每个物体会对光产生不同的反应。</p>
+<p>ambient材质向量定义了在环境光照下这个表面反射的是什么颜色，通常与表面的颜色相同。diffuse材质向量定义了在漫反射光照下表面的颜色。漫反射颜色（和环境光照一样）也被设置为我们期望的物体颜色。specular材质向量设置的是表面上镜面高光的颜色（或者甚至可能反映一个特定表面的颜色）。最后，shininess影响镜面高光的散射/半径。</p>
+<h3 id="光照贴图">光照贴图：</h3>
+<p>现实中的物体通常不会只包含一种材质，可能由多种材质组成。通过引入漫反射和镜面光贴图，允许我们对物体的漫反射分量和镜面光分量有更精确的控制。</p>
+<ul>
+<li>漫反射贴图<br />
+一个纹理。我们仅仅是对同样的原理使用了不同的名字：其实都是使用一张覆盖物体的图像，让我们能够逐片段索引其独立的颜色值。在光照场景中，它通常叫做一个漫反射贴图(Diffuse Map)（3D艺术家通常都这么叫它），它是一个表现了物体所有的漫反射颜色的纹理图像。</li>
+<li>镜面光贴图<br />
+想要让物体的某些部分以不同的强度显示镜面高光，我们同样可以使用一个专门用于镜面高光的纹理贴图。这也就意味着我们需要生成一个黑白的（如果你想得话也可以是彩色的）纹理，来定义物体每部分的镜面光强度。</li>
+</ul>
+<h3 id="投光物">投光物</h3>
+<p>定向光（direction light）<br />
+点光源（point light）<br />
+聚光（spot light）</p>
+<p>平行光：<br />
+当我们使用一个假设光源处于无限远处的模型时，它就被称为定向光，因为它的所有光线都有着相同的方向，它与光源的位置是没有关系的。<br />
+定向光非常好的一个例子就是太阳。太阳距离我们并不是无限远，但它已经远到在光照计算中可以把它视为无限远了。所以来自太阳的所有光线将被模拟为平行光线</p>
+<p>点光源：<br />
+点光源是处于世界中某一个位置的光源，它会朝着所有方向发光，但光线会随着距离逐渐衰减。想象作为投光物的灯泡和火把，它们都是点光源。<br />
+衰减-随着光线传播距离的增长逐渐削减光的强度通常叫做衰减(Attenuation)。</p>
+<p><img src="/_resources/c82af1fa1f2640758c6abc49916e2c59.png" /><br />
+点光源就是一个能够配置位置和衰减的光源。它是我们光照工具箱中的又一个光照类型。</p>
+<p>聚光：<br />
+我们要讨论的最后一种类型的光是聚光(Spotlight)。聚光是位于环境中某个位置的光源，它只朝一个特定方向而不是所有方向照射光线。这样的结果就是只有在聚光方向的特定半径内的物体才会被照亮，其它的物体都会保持黑暗。聚光很好的例子就是路灯或手电筒。</p>
+<p>OpenGL中聚光是用一个世界空间位置、一个方向和一个切光角(Cutoff Angle)来表示的，切光角指定了聚光的半径（译注：是圆锥的半径不是距光源距离那个半径）。对于每个片段，我们会计算片段是否位于聚光的切光方向之间（也就是在锥形内），如果是的话，我们就会相应地照亮片段。<br />
+<img src="/_resources/d90c53e8dc3e4893a57bb1d13f5e6daa.png" /></p>
+<p>平滑/软化边缘：<br />
+为了创建一种看起来边缘平滑的聚光，我们需要模拟聚光有一个内圆锥(Inner Cone)和一个外圆锥(Outer Cone)。我们可以将内圆锥设置为上一部分中的那个圆锥，但我们也需要一个外圆锥，来让光从内圆锥逐渐减暗，直到外圆锥的边界。</p>
+<p>为了创建一个外圆锥，我们只需要再定义一个余弦值来代表聚光方向向量和外圆锥向量（等于它的半径）的夹角。然后，如果一个片段处于内外圆锥之间，将会给它计算出一个0.0到1.0之间的强度值。如果片段在内圆锥之内，它的强度就是1.0，如果在外圆锥之外强度值就是0.0。</p>
+<p><img src="/_resources/45bd649a5ea740b18427da1b6411cf68.png" /></p>
 <h2 id="模型加载">模型加载</h2>
 <h3 id="assimp">Assimp</h3>
 <p>3D建模工具可以创造复杂的形状，并使用一种叫做UV映射的方法来应用贴图。这些工具会在导出到模型文件的时候自动生成所有的顶点坐标、顶点法线、以及纹理坐标。<br />
