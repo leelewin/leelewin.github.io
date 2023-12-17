@@ -24,8 +24,8 @@
                 ></span
               >
               <span
-                >Updated At：<time datetime="1660653295090"
-                  >2022-08-16 20:34</time
+                >Updated At：<time datetime="1702562291841"
+                  >2023-12-14 21:58</time
                 ></span
               >
             </div>
@@ -38,13 +38,26 @@
             
           </div>
         </header>
-        <div class="article-content markdown-body"><nav class="table-of-contents"><ul><li><a href="#组织大型c项目">组织大型c++项目</a></li><li><a href="#样例">样例</a></li><li><a href="#构建build">构建（Build）</a></li><li><a href="#cmake一般使用流程">CMake一般使用流程</a></li><li><a href="#核心语法">核心语法</a></li><li><a href="#基础配置">基础配置</a></li><li><a href="#引入第三方依赖">引入第三方依赖</a><ul><li><a href="#1fetchcontent-下载并构建源码">1.FetchContent 下载并构建源码</a></li><li><a href="#2find_package-引用系统中预安装的第三方库">2.find_package 引用系统中预安装的第三方库</a></li></ul></li><li><a href="#编译目标文件">编译目标文件</a><ul><li><a href="#静态库-动态库">静态库  动态库</a></li><li><a href="#可执行文件">可执行文件</a></li></ul></li><li><a href="#安装和打包-版本控制">安装和打包 版本控制</a></li><li><a href="#测试">测试</a></li></ul></nav><h2 id="组织大型c项目">组织大型c++项目</h2>
+        <div class="article-content markdown-body"><nav class="table-of-contents"><ul><li><a href="#编译框架-cmake">编译框架 CMake</a><ul><li><a href="#组织大型c项目">组织大型c++项目</a></li><li><a href="#样例">样例</a></li><li><a href="#构建build">构建（Build）</a><ul><li><a href="#cmake一般使用流程">CMake一般使用流程</a></li><li><a href="#cmake配合脚本一起使用">CMake配合脚本一起使用</a></li></ul></li><li><a href="#命令行">命令行</a></li><li><a href="#核心语法">核心语法</a><ul><li><a href="#基础配置">基础配置</a></li><li><a href="#控制流">控制流</a></li><li><a href="#进阶">进阶</a></li></ul></li><li><a href="#引入第三方依赖">引入第三方依赖</a><ul><li><a href="#1fetchcontent-下载并构建源码">1.FetchContent 下载并构建源码</a></li><li><a href="#2find_package-引用系统中预安装的第三方库">2.find_package 引用系统中预安装的第三方库</a></li></ul></li><li><a href="#编译目标文件">编译目标文件</a><ul><li><a href="#静态库-动态库">静态库  动态库</a></li><li><a href="#可执行文件">可执行文件</a></li></ul></li><li><a href="#安装和打包-版本控制">安装和打包 版本控制</a></li><li><a href="#测试">测试</a></li></ul></li><li><a href="#配置框架">配置框架</a><ul><li><a href="#mconf">mconf</a></li><li><a href="#qconf">qconf</a></li><li><a href="#kconfig">Kconfig</a></li></ul></li><li><a href="#编译和配置框架综合样例">编译和配置框架综合样例</a></li></ul></nav><h1 id="编译框架-cmake">编译框架 CMake</h1>
+<h2 id="组织大型c项目">组织大型c++项目</h2>
 <h2 id="样例">样例</h2>
 <p><a title="https://hsf-training.github.io/hsf-training-cmake-webpage/06-projectstructure/index.html" href="https://hsf-training.github.io/hsf-training-cmake-webpage/06-projectstructure/index.html">good</a><br />
 <a title="https://github.com/hsf-training/hsf-training-cmake-webpage/tree/gh-pages/_includes/code/03-structure" href="https://github.com/hsf-training/hsf-training-cmake-webpage/tree/gh-pages/_includes/code/03-structure">不错的例子</a></p>
+<p><a title="https://www.bilibili.com/video/BV1Yv4y1g7fq?p=1&amp;share_medium=android&amp;share_plat=android&amp;share_session_id=65f3eebd-8c65-421c-b47c-d90c65582fe1&amp;share_source=WEIXIN&amp;share_tag=s_i&amp;timestamp=1655770692&amp;unique_k=tEf0d4U" href="https://www.bilibili.com/video/BV1Yv4y1g7fq?p=1&amp;share_medium=android&amp;share_plat=android&amp;share_session_id=65f3eebd-8c65-421c-b47c-d90c65582fe1&amp;share_source=WEIXIN&amp;share_tag=s_i&amp;timestamp=1655770692&amp;unique_k=tEf0d4U">B站讲解视频，还不错</a></p>
+<p><a title="https://stdrc.cc/post/2021/12/28/cmake-variables/" href="https://stdrc.cc/post/2021/12/28/cmake-variables/">CMAKE_XXX_DIR等内置变量辨析</a></p>
+<p>在掌握基本的cmake原理和用法的基础上，研究开源项目的cmake文件是如何编写的。</p>
+<p><a title="https://www.zhihu.com/question/64554054" href="https://www.zhihu.com/question/64554054">推荐的开源项目</a><br />
+常见的应用场景：</p>
+<ul>
+<li>general usage</li>
+<li>qt usage</li>
+<li>cuda usage</li>
+<li>python binding usage</li>
+</ul>
+<p>更进一步掌握原理-<a title="https://cmake.org/cmake/help/latest/index.html" href="https://cmake.org/cmake/help/latest/index.html">阅读官方文档</a></p>
 <h2 id="构建build">构建（Build）</h2>
 <p>当需要编译的东西很多时，需要说明先编译什么，后编译什么</p>
-<h2 id="cmake一般使用流程">CMake一般使用流程</h2>
+<h3 id="cmake一般使用流程">CMake一般使用流程</h3>
 <p>CMake提供cmake、ctest、cpack三个命令行工具分别负责构建、测试、打包。</p>
 <ol>
 <li>编写CMakeLists.txt<br />
@@ -61,18 +74,82 @@ or<br />
 <p>还有更简单的：<br />
 <code>mkdir build</code><br />
 <code>cd build &amp;&amp; cmake .. &amp;&amp; make</code></p>
+<h3 id="cmake配合脚本一起使用">CMake配合脚本一起使用</h3>
+<p>Win</p>
+<p>Linux</p>
+<h2 id="命令行">命令行</h2>
+<div><pre class="hljs"><code>cmake -G<span class="hljs-string">"Unix Makefiles"</span> <span class="hljs-comment">#指定生成的构建系统类型</span>
+    -D<span class="hljs-variable">&lt;var&gt;</span>=<span class="hljs-variable">&lt;value&gt;</span>   <span class="hljs-comment">#设置cmake变量的值</span>
+    <span class="hljs-variable">&lt;path-to-source&gt;</span>  <span class="hljs-comment">#源树的路径，其下必须包含一个CMakeLists.txt文件</span>
+    </code></pre></div>
 <h2 id="核心语法">核心语法</h2>
-<h2 id="基础配置">基础配置</h2>
-<div><pre class="hljs"><code><span class="hljs-function"><span class="hljs-title">target_include_directories</span><span class="hljs-params">(myapp PUBLIC /path)</span></span> #添加头文件搜索目录
-<span class="hljs-function"><span class="hljs-title">target_link_libraries</span><span class="hljs-params">(myapp PUBLIC hellolib)</span></span> #添加要链接的库
-<span class="hljs-function"><span class="hljs-title">target_add_definitions</span><span class="hljs-params">(myapp PUBLIC MY_MACRO=<span class="hljs-number">1</span>)</span></span> #添加一个宏定义
-<span class="hljs-function"><span class="hljs-title">target_compile_options</span><span class="hljs-params">(myapp PUBLIC -fopenmp)</span></span> #添加编译器命令行选项
-<span class="hljs-function"><span class="hljs-title">target_sources</span><span class="hljs-params">(myapp PUBLIC hello.cc other.cc)</span></span> #添加要编译的源文件
+<h3 id="基础配置">基础配置</h3>
+<div><pre class="hljs"><code>add_executable()
+
+<span class="hljs-keyword">include</span>(&lt;<span class="hljs-keyword">file</span>|module&gt; [OPTIONAL] [RESULT_VARIABLE &lt;<span class="hljs-keyword">var</span>&gt;] #用于语句的复用.cmake文件
+                      [NO_POLICY_SCOPE])
+<span class="hljs-keyword">set</span>(&lt;variable&gt; &lt;value&gt;... [PARENT_SCOPE]) #给变量设置值， ${}取值
+<span class="hljs-built_in">string</span>(<span class="hljs-keyword">REPLACE</span> &lt;match-string&gt; &lt;<span class="hljs-keyword">replace</span>-string&gt; &lt;<span class="hljs-keyword">out</span>-<span class="hljs-keyword">var</span>&gt; &lt;<span class="hljs-keyword">input</span>&gt;...) #将&lt;<span class="hljs-keyword">input</span>&gt;中所有出现的&lt;match_string&gt;替换为&lt;replace_string&gt;，并将结果存储在&lt;<span class="hljs-keyword">out</span>-<span class="hljs-keyword">var</span>&gt;中。若&lt;match_string&gt;在&lt;<span class="hljs-keyword">input</span>&gt;中未出现，&lt;<span class="hljs-keyword">out</span>-<span class="hljs-keyword">var</span>&gt;的值将为&lt;<span class="hljs-keyword">input</span>&gt;
+<span class="hljs-variable">$ENV</span>{<span class="hljs-keyword">VAR</span>} to <span class="hljs-keyword">read</span> environment variable <span class="hljs-keyword">VAR</span>,To <span class="hljs-keyword">test</span> whether <span class="hljs-keyword">an</span> environment variable is defined, <span class="hljs-keyword">use</span> the signature <span class="hljs-keyword">if</span>(DEFINED ENV{&lt;name&gt;})
+<span class="hljs-keyword">set</span>(ENV{变量名} 值) 设置环境变量</code></pre></div>
+<div><pre class="hljs"><code>target<span class="hljs-constructor">_include_directories(<span class="hljs-params">myapp</span> PUBLIC <span class="hljs-operator">/</span><span class="hljs-params">path</span>)</span> #添加头文件搜索目录
+target<span class="hljs-constructor">_link_libraries(<span class="hljs-params">myapp</span> PUBLIC <span class="hljs-params">hellolib</span>)</span> #添加要链接的库
+target<span class="hljs-constructor">_add_definitions(<span class="hljs-params">myapp</span> PUBLIC MY_MACRO=1)</span> #添加一个宏定义
+target<span class="hljs-constructor">_compile_options(<span class="hljs-params">myapp</span> PUBLIC -<span class="hljs-params">fopenmp</span>)</span> #添加编译器命令行选项
+target<span class="hljs-constructor">_sources(<span class="hljs-params">myapp</span> PUBLIC <span class="hljs-params">hello</span>.<span class="hljs-params">cc</span> <span class="hljs-params">other</span>.<span class="hljs-params">cc</span>)</span> #添加要编译的源文件
 也可以通过以下指令（不推荐使用），把选项加到所有接下来的目标去
-<span class="hljs-function"><span class="hljs-title">include_directories</span><span class="hljs-params">(/path)</span></span> #添加头文件搜索目录
-<span class="hljs-function"><span class="hljs-title">link_directories</span><span class="hljs-params">(/path/)</span></span> #添加库文件的搜索路径
-<span class="hljs-function"><span class="hljs-title">add_definitions</span><span class="hljs-params">(MY_MACRO=<span class="hljs-number">1</span>)</span></span> #添加一个宏定义
-<span class="hljs-function"><span class="hljs-title">add_compile</span><span class="hljs-params">(-fopenmp)</span></span>    #添加编译器命令行选项</code></pre></div>
+<span class="hljs-keyword">include</span><span class="hljs-constructor">_directories(<span class="hljs-operator">/</span><span class="hljs-params">path</span>)</span> #添加头文件搜索目录
+link<span class="hljs-constructor">_directories(<span class="hljs-operator">/</span><span class="hljs-params">path</span><span class="hljs-operator">/</span>)</span> #添加库文件的搜索路径
+add<span class="hljs-constructor">_definitions(-DMY_MACRO)</span>  #添加一个宏定义
+add<span class="hljs-constructor">_definitions(-DFOO=${<span class="hljs-params">xxx</span>})</span> #将-D定义的标志添加到源文件中
+add<span class="hljs-constructor">_compile(-<span class="hljs-params">fopenmp</span>)</span>    #添加编译器命令行选项
+add_subdirectory (source_dir <span class="hljs-literal">[<span class="hljs-identifier">binary_dir</span>]</span> <span class="hljs-literal">[EXCLUDE<span class="hljs-identifier">_FROM_ALL</span>]</span>) #添加一个子目录并构建该子目录。source_dir可以是相对也可以是绝对，相对是相对当前目录的，是必选参数。
+# 因为add_subdirectory增加的构建子目录，CMake构建工程会自动将该子目录添加到编译和链接的搜索目录中，以保证整个构建工程能满足依赖，这也是为什么使用add_subdirectory后不需要将子文件夹加入到头文件或库文件搜索目录也能搜索到子目录的头文件或库文件。
+
+</code></pre></div>
+<h3 id="控制流">控制流</h3>
+<div><pre class="hljs"><code><span class="hljs-function"><span class="hljs-title">foreach</span><span class="hljs-params">(&lt;loop_var&gt; &lt;items&gt;)</span></span>
+  &lt;commands&gt;
+<span class="hljs-function"><span class="hljs-title">endforeach</span><span class="hljs-params">()</span></span> #&lt;items&gt;是一个item列表，由空格或分号分隔。</code></pre></div>
+<h3 id="进阶">进阶</h3>
+<div><pre class="hljs"><code>file(&lt;COPY|INSTALL&gt; &lt;files&gt;... DESTINATION &lt;dir&gt;
+     <span class="hljs-comment">[NO_SOURCE_PERMISSIONS | USE_SOURCE_PERMISSIONS]</span>
+     <span class="hljs-comment">[FILE_PERMISSIONS &lt;permissions&gt;...]</span>
+     <span class="hljs-comment">[DIRECTORY_PERMISSIONS &lt;permissions&gt;...]</span>
+     <span class="hljs-comment">[FOLLOW_SYMLINK_CHAIN]</span>
+     <span class="hljs-comment">[FILES_MATCHING]</span>
+     <span class="hljs-comment">[<span class="hljs-comment">[PATTERN &lt;pattern&gt; | REGEX &lt;regex&gt;]</span>   #模式匹配
+     <span class="hljs-comment">[EXCLUDE]</span> <span class="hljs-comment">[PERMISSIONS &lt;permissions&gt;...]</span>]</span> <span class="hljs-comment">[...]</span>)
+file(GLOB &lt;variable&gt; <span class="hljs-comment">[LIST_DIRECTORIES true|false]</span> <span class="hljs-comment">[RELATIVE &lt;path&gt;]</span> <span class="hljs-comment">[CONFIGURE_DEPENDS]</span> <span class="hljs-comment">[&lt;globbing-expressions&gt;...]</span>)¶ #生成一个匹配全局表达式的文件列表，并将其存储到变量中
+execute_process(COMMAND &lt;cmd1&gt; <span class="hljs-comment">[&lt;arguments&gt;]</span>
+                <span class="hljs-comment">[COMMAND &lt;cmd2&gt; <span class="hljs-comment">[&lt;arguments&gt;]</span>]</span>...
+                <span class="hljs-comment">[WORKING_DIRECTORY &lt;directory&gt;]</span>
+                <span class="hljs-comment">[TIMEOUT &lt;seconds&gt;]</span>
+                <span class="hljs-comment">[RESULT_VARIABLE &lt;variable&gt;]</span>
+                <span class="hljs-comment">[RESULTS_VARIABLE &lt;variable&gt;]</span>
+                <span class="hljs-comment">[OUTPUT_VARIABLE &lt;variable&gt;]</span>
+                <span class="hljs-comment">[ERROR_VARIABLE &lt;variable&gt;]</span>
+                <span class="hljs-comment">[INPUT_FILE &lt;file&gt;]</span>
+                <span class="hljs-comment">[OUTPUT_FILE &lt;file&gt;]</span>
+                <span class="hljs-comment">[ERROR_FILE &lt;file&gt;]</span>
+                <span class="hljs-comment">[OUTPUT_QUIET]</span>
+                <span class="hljs-comment">[ERROR_QUIET]</span>
+                <span class="hljs-comment">[COMMAND_ECHO &lt;where&gt;]</span>
+                <span class="hljs-comment">[OUTPUT_STRIP_TRAILING_WHITESPACE]</span>
+                <span class="hljs-comment">[ERROR_STRIP_TRAILING_WHITESPACE]</span>
+                <span class="hljs-comment">[ENCODING &lt;name&gt;]</span>
+                <span class="hljs-comment">[ECHO_OUTPUT_VARIABLE]</span>
+                <span class="hljs-comment">[ECHO_ERROR_VARIABLE]</span>
+                <span class="hljs-comment">[COMMAND_ERROR_IS_FATAL &lt;ANY|LAST&gt;]</span>) #execute_process 命令将从当前正在执行的CMake进程中派生一个或多个子进程，从而提供了在配置项目时运行任意命令的方法。可以在一次调用 execute_process 时执行多个命令。但请注意，每个命令的输出将通过管道传输到下一个命令中
+ add_custom_command(TARGET &lt;target&gt;
+                  PRE_BUILD | PRE_LINK | POST_BUILD   #分别表示编译之前执行命令，链接之前执行命令，生成目标文件后执行命令
+                  COMMAND command1 <span class="hljs-comment">[ARGS]</span> <span class="hljs-comment">[args1...]</span>
+                  <span class="hljs-comment">[COMMAND command2 <span class="hljs-comment">[ARGS]</span> <span class="hljs-comment">[args2...]</span> ...]</span>
+                  <span class="hljs-comment">[BYPRODUCTS <span class="hljs-comment">[files...]</span>]</span>
+                  <span class="hljs-comment">[WORKING_DIRECTORY dir]</span>
+                  <span class="hljs-comment">[COMMENT comment]</span>
+                  <span class="hljs-comment">[VERBATIM]</span> <span class="hljs-comment">[USES_TERMINAL]</span>
+                  <span class="hljs-comment">[COMMAND_EXPAND_LISTS]</span>) #在生成目标文件（add_executable）时自动执行其指定的命令</code></pre></div>
 <h2 id="引入第三方依赖">引入第三方依赖</h2>
 <p><a title="https://cmake.org/cmake/help/latest/guide/using-dependencies/index.html#guide:Using%20Dependencies%20Guide" href="https://cmake.org/cmake/help/latest/guide/using-dependencies/index.html#guide:Using%20Dependencies%20Guide">官方文档-Using Denpendencies Guide</a><br />
 <a title="https://www.cnblogs.com/my_life/articles/14479973.html" href="https://www.cnblogs.com/my_life/articles/14479973.html">blog: cmake集成第三方库</a></p>
@@ -117,6 +194,78 @@ find_package提供了两种主要的方式来搜索</p>
 <code>${CMAKE_INSTALL_PREFIX}</code>——&gt;<code>/usr/local</code></p>
 <p><a title="https://zhuanlan.zhihu.com/p/102955723" href="https://zhuanlan.zhihu.com/p/102955723">知乎 Cmake打包</a></p>
 <h2 id="测试">测试</h2>
+<h1 id="配置框架">配置框架</h1>
+<p>Kconfig<br />
+广泛用于U-Boot等项目的开源配置框架，支持组件的参数、使能、模块化等配置，参见Kconfig Language。</p>
+<h2 id="mconf">mconf</h2>
+<p>mconf 是 Linux 内核中的一个配置工具，用于配置和编辑内核的配置文件。它通常与 Kconfig 构建系统一起使用。以下是一些关键点：</p>
+<p>Kconfig 文件： 内核的配置信息存储在一个名为 Kconfig 的文件中。这个文件包含了内核的各种配置选项，包括驱动、功能和系统参数。</p>
+<p>Makefile： mconf 通过读取 Kconfig 文件，并根据用户的选择<strong>生成</strong>内核的配置文件（通常是 .config 文件）。这个文件将被用于后续的编译过程。</p>
+<p>菜单界面： mconf 提供了一个文本菜单界面，允许用户通过键盘导航和选择配置选项。用户可以启用或禁用特定功能、模块或驱动</p>
+<h2 id="qconf">qconf</h2>
+<p>qconf 是配置工具，用于配置和管理项目的编译选项，主要用于CMake项目。以下是一些关键特点：</p>
+<p>图形界面： qconf 提供了一个图形用户界面（GUI），使用户能够通过可视化的方式设置项目的配置选项，而不必手动编辑配置文件。</p>
+<p>Kconfig配置文件(输入)： 项目的配置信息通常存储在一个名为 Kconfig 的配置文件中，该文件包含了项目的各种编译选项和设置。</p>
+<p>预设配置（输入）： qconf 支持预设配置，用户可以在启动时加载特定的配置集，以简化不同构建配置之间的切换。预设配置通常是一些事先定义好的配置选项集，用户可以在启动 qconf 时加载这些预设配置。预设配置可以简化特定构建配置的选择</p>
+<p>CMake 集成（输出）： qconf 可以<strong>生成</strong>与 CMake 构建系统兼容的配置文件，通常是 config.cmake。这样，可以使用 CMake 来进行项目的构建。</p>
+<p>Makefile集成（输出）：根据用户的选择<strong>生成</strong>配置文件（通常是 .config 文件）。这个文件将被用于后续的编译过程。</p>
+<div><pre class="hljs"><code>qconf <span class="hljs-params">--fontsize</span> xx
+         <span class="hljs-params">--prefix</span> <span class="hljs-string">"xx"</span>
+         <span class="hljs-params">--cmakefile</span> xxx/config.cmake <span class="hljs-comment">#生成用于CMake</span>
+         <span class="hljs-params">--cfgfile</span>  xxx/<span class="hljs-string">.config</span> <span class="hljs-comment">#生成用于Makefile</span>
+         <span class="hljs-params">--loadcfg</span> <span class="hljs-string">"xxxx"</span> <span class="hljs-comment">#加载预设配置</span>
+         <span class="hljs-string">"xxxx/Kconfig"</span>  <span class="hljs-comment">#配置文件</span>
+</code></pre></div>
+<h2 id="kconfig">Kconfig</h2>
+<p>Kconfig 是一种配置语言，广泛用于 Linux 内核和其他一些开源项目中，用于配置和定制软件的构建选项，参见Kconfig Language。</p>
+<ul>
+<li>菜单和菜单配置：</li>
+</ul>
+<div><pre class="hljs"><code>menu <span class="hljs-string">"My Configuration Menu"</span>
+            hidden <span class="hljs-keyword">if</span> M1
+config MENU_OPTION1
+    <span class="hljs-type">bool</span> <span class="hljs-string">"Option 1"</span>
+config MENU_OPTION2
+    <span class="hljs-type">bool</span> <span class="hljs-string">"Option 2"</span>
+endmenu
+</code></pre></div>
+<p>MENU_OPTION1 和 MENU_OPTION2 是属于名为 "My Configuration Menu" 的菜单的配置选项。<br />
+其中，使用 hidden if 条件表达式，表示当 M1 为真时，显示该菜单，可根据其他配置项来动态控制菜单的显示隐藏。</p>
+<ul>
+<li>配置选项：</li>
+</ul>
+<div><pre class="hljs"><code>config MY_FEATURE
+    <span class="hljs-type">bool</span> "Enable My Feature"
+    <span class="hljs-keyword">depends</span> <span class="hljs-keyword">on</span> C1 || C2
+    <span class="hljs-keyword">default</span> y <span class="hljs-keyword">if</span> (D1 &amp;&amp; (C1 || C2))
+    <span class="hljs-keyword">default</span> n <span class="hljs-keyword">if</span> D1
+    help_chs
+        开启 
+    help
+        <span class="hljs-keyword">Enable</span> this <span class="hljs-keyword">option</span> <span class="hljs-keyword">to</span> <span class="hljs-keyword">include</span> support <span class="hljs-keyword">for</span> My Feature.
+</code></pre></div>
+<p>MY_FEATURE 是配置选项的标识符，Enable My Feature 是一个用户友好的描述。<br />
+depends on</p>
+<ul>
+<li>选择块</li>
+</ul>
+<div><pre class="hljs"><code>choice
+    prompt <span class="hljs-string">"xxxxx"</span>
+    <span class="hljs-keyword">default</span> D1 <span class="hljs-keyword">if</span> D1_CFG
+    <span class="hljs-keyword">default</span> D2 <span class="hljs-keyword">if</span> D2_CFG
+    help
+        xxxxxxxxxxxxx
+config D1
+    <span class="hljs-type">bool</span> <span class="hljs-string">"D1"</span>
+config D2
+    <span class="hljs-type">bool</span> <span class="hljs-string">"D2"</span>
+endchoice</code></pre></div>
+<p>choice 是一个 Kconfig 中的关键字，用于定义一组互斥的配置选项，用户可以从中选择一个，可以添加depend on来控制</p>
+<ul>
+<li>其他文件引入</li>
+</ul>
+<div><pre class="hljs"><code><span class="hljs-built_in">source</span> <span class="hljs-string">"xxxx/Kconfig"</span></code></pre></div>
+<h1 id="编译和配置框架综合样例">编译和配置框架综合样例</h1>
 </div>
       </article>
     </div>
