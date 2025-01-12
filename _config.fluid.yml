@@ -463,7 +463,7 @@ index:
   # 头图高度，屏幕百分比
   # Height ratio of banner image
   # Available: 0 - 100
-  banner_img_height: 50
+  banner_img_height: 70
 
   # 头图黑色蒙版的不透明度，available: 0 - 1.0， 1 是完全不透明
   # Opacity of the banner mask, 1.0 is completely opaque
@@ -530,7 +530,7 @@ index:
 # Post Page
 #---------------------------
 post:
-  banner_img: /img/default.png
+  banner_img: /img/home_page1.jpg
   banner_img_height: 30
   banner_mask_alpha: 0.3
 
@@ -894,8 +894,8 @@ discuss:
 # Archive Page
 #---------------------------
 archive:
-  banner_img: /img/default.png
-  banner_img_height: 60
+  banner_img: /img/home_page1.jpg
+  banner_img_height: 70
   banner_mask_alpha: 0.3
 
 
@@ -905,8 +905,8 @@ archive:
 #---------------------------
 category:
   enable: true
-  banner_img: /img/default.png
-  banner_img_height: 60
+  banner_img: /img/home_page1.jpg
+  banner_img_height: 70
   banner_mask_alpha: 0.3
 
   # 分类的排序字段，前面带减号是倒序，不带减号是正序
@@ -934,7 +934,7 @@ category:
 #---------------------------
 tag:
   enable: true
-  banner_img: /img/default.png
+  banner_img: /img/home_page1.jpg
   banner_img_height: 80
   banner_mask_alpha: 0.3
   tagcloud:
@@ -951,8 +951,8 @@ tag:
 #---------------------------
 about:
   enable: true
-  banner_img: /img/default.png
-  banner_img_height: 60
+  banner_img: /img/home_page1.jpg
+  banner_img_height: 50
   banner_mask_alpha: 0.3
   avatar: /img/avatar.png
   name: "lewin"
@@ -974,7 +974,7 @@ about:
 # Custom Page through `hexo new page`
 #---------------------------
 page:
-  banner_img: /img/default.png
+  banner_img: /img/home_page1.jpg
   banner_img_height: 60
   banner_mask_alpha: 0.3
 
@@ -985,7 +985,7 @@ page:
 #---------------------------
 page404:
   enable: true
-  banner_img: /img/default.png
+  banner_img: /img/home_page1.jpg
   banner_img_height: 85
   banner_mask_alpha: 0.3
   # 重定向到首页的延迟(毫秒)
@@ -999,7 +999,7 @@ page404:
 #---------------------------
 links:
   enable: false
-  banner_img: /img/default.png
+  banner_img: /img/home_page1.jpg
   banner_img_height: 60
   banner_mask_alpha: 0.3
   # 友链的成员项
